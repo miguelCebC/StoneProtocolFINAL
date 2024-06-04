@@ -5,31 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoneProtocol.NVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#5bc3ff"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10,20,0,0"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Panel de login -->
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,101,0,0" Height="273">
+        <!-- Panel de login centrado -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Iniciar Sesión"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center"
-                     Foreground="White"
-                     FontSize="22"
-                     Margin="0,0,0,20"/>
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="22"
+                       Margin="0,0,0,20"/>
 
-            <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,10,0,0"  Style="{StaticResource TboxPerson}"/>
-            <CheckBox Name="EsAdminCheckBox" Content="Administrador" Margin="0,10,0,0" Foreground="White"/>
+            <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,10,0,0" Style="{StaticResource TboxPerson}"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                <Button Name="BotonRegistrar" Content="Registrarse" Width="100" Height="30" Margin="5" Click="BotonRegistrar_Click"/>
-                <Button Name="BotonIniciarSesion" Content="Iniciar Sesión" Width="100" Height="30" Margin="5" Click="BotonIniciarSesion_Click"/>
+                <Button Name="BotonRegistrar" Content="Registrarse" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>
+                <Button Name="BotonIniciarSesion" Content="Iniciar Sesión" Width="114" Height="40" Margin="5" Click="BotonIniciarSesion_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -15,7 +15,7 @@
     <None Remove="Imagenes\cerrar.png" />
     <None Remove="Imagenes\fuera.png" />
     <None Remove="Imagenes\menos.png" />
-    <None Remove="Imagenes\movil.jpg" />
+    <None Remove="Imagenes\movil.png" />
     <None Remove="Imagenes\portatil.png" />
     <None Remove="Imagenes\profile.png" />
   </ItemGroup>
@@ -43,7 +43,7 @@
     <Resource Include="Imagenes\menos.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Imagenes\movil.jpg">
+    <Resource Include="Imagenes\movil.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\portatil.png">

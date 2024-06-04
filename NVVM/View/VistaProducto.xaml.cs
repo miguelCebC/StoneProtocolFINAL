@@ -50,7 +50,7 @@ namespace StoneProtocol.NVVM.View
         {
             string imagePath = category switch
             {
-                "Smartphones" => "pack://application:,,,/Imagenes/2.png",
+                "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
                 "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
                 "Tablets" => "pack://application:,,,/Imagenes/2.png",
                 "Accessories" => "pack://application:,,,/Imagenes/2.png",
