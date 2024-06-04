@@ -10,11 +10,10 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-     MouseDown="Window_MouseDown">
+        MouseDown="Window_MouseDown">
     <Window.DataContext>
         <viewModel:ViewModelPrincipal />
     </Window.DataContext>
-
 
     <Border Background="#272537" CornerRadius="15" Padding="10" MouseDown="Border_MouseDown">
         <Grid>
@@ -40,66 +39,77 @@
             </StackPanel>
 
             <TextBlock Text="Stone Protocol"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Left"
-                   Foreground="White"
-                   FontSize="22"
-                   Margin="15,0,0,0"
-                   Grid.Row="0"
-                   Grid.Column="0"/>
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="White"
+                       FontSize="22"
+                       Margin="15,0,0,0"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                      />
 
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <RadioButton Content="Home"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowHomeViewCommand}"/>
-
-                <RadioButton Content="Productos"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowProductsViewCommand}"/>
-
-                <RadioButton Content="Tienda"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowStoreViewCommand}"/>
-
-                <RadioButton Content="Salir"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding CloseCommand}"/>
-
-                <RadioButton Content="Pepe"
+            <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <RadioButton 
+                         x:Name="btnHome"
+                         Content="Home"
                          Height="50"
                          Foreground="White"
                          FontSize="14"
                          Style="{StaticResource MenuButton}"
                          Command="{Binding ShowHomeViewCommand}"
-                         Visibility="Hidden"/>
+                     Visibility="Collapsed"/>
+
+                <RadioButton 
+                         x:Name="btnProductos"
+                         Content="Productos"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="14"
+                         Style="{StaticResource MenuButton}"
+                         Command="{Binding ShowProductsViewCommand}"
+                     Visibility="Collapsed"/>
+
+                <RadioButton 
+                         x:Name="btnTienda"
+                         Content="Tienda"
+                         Height="50"
+                         Foreground="White"
+                         FontSize="14"
+                         Style="{StaticResource MenuButton}"
+                         Command="{Binding ShowStoreViewCommand}"
+                     Visibility="Collapsed"/>
+
+                <RadioButton Content="Salir"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButton}"
+                             Command="{Binding CloseCommand}"/>
+
+                <RadioButton x:Name="btnPepe"
+                             Content="Pepe"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButton}"
+                             Command="{Binding ShowHomeViewCommand}"
+                             Visibility="Hidden"/>
             </StackPanel>
 
             <TextBox Width="250"
-                 Height="50"
-                 VerticalContentAlignment="Center"
-                 HorizontalAlignment="Left"
-                 Margin="10"
-                 Grid.Row="0"
-                 Grid.Column="1"
-                 Text="Busqueda"
-                 Style="{StaticResource TboxPerson}"/>
+                     Height="50"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="10"
+                     Grid.Row="0"
+                     Grid.Column="1"
+                     Text="Busqueda"
+                     Style="{StaticResource TboxPerson}"/>
 
             <ContentControl Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="10"
-                        Content="{Binding CurrentView }"/>
+                            Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding CurrentView}"/>
         </Grid>
     </Border>
 </Window>

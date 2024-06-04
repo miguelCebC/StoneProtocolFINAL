@@ -16,7 +16,10 @@ namespace StoneProtocol.NVVM.Model
         public MySqlConnection GetConnection()
         {
             var connection = new MySqlConnection(connectionString);
-            connection.Open();
+            if (connection.State == System.Data.ConnectionState.Open)
+            {
+                connection.Close();
+            }
             return connection;
         }
 

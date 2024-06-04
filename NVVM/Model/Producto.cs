@@ -1,6 +1,4 @@
-﻿
-
-namespace StoneProtocol.NVVM.Model
+﻿namespace StoneProtocol.NVVM.Model
 {
     public class Producto
     {
@@ -8,5 +6,6 @@ namespace StoneProtocol.NVVM.Model
         public string NombreProducto { get; set; }
         public int CategoriaId { get; set; }
         public string CategoriaNombre { get; set; }
+        public string ImageSource { get; set; }
     }
 }

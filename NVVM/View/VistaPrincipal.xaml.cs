@@ -226,15 +226,15 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private LinearGradientBrush GetRandomGradient()
+        private static LinearGradientBrush GetRandomGradient()
         {
-            Random rand = new Random();
+            Random rand = new();
             Color color1 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
             Color color2 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
             return new LinearGradientBrush(color1, color2, 45);
         }
 
-        private ImageSource GetImageSourceByCategory(string category)
+        private static ImageSource GetImageSourceByCategory(string category)
         {
             string imagePath = category switch
             {

@@ -87,29 +87,27 @@ namespace StoneProtocol
             return IntPtr.Zero;
         }
 
+
         public void HandleLogin(Usuario usuario)
         {
-            // Activar los RadioButtons según el rol del usuario
-            foreach (var child in LogicalTreeHelper.GetChildren(this))
-            {
-                if (child is RadioButton radioButton)
-                {
-                    if (usuario.Admin)
-                    {
-                        if (radioButton.Content.ToString() == "Admin")
-                        {
-                            radioButton.Visibility = Visibility.Visible;
-                        }
-                    }
-                    else
-                    {
-                        if (radioButton.Content.ToString() != "Admin")
-                        {
-                            radioButton.Visibility = Visibility.Visible;
-                        }
-                    }
-                }
+            if (usuario.Admin == true) {
+                btnHome.Visibility = Visibility.Visible;
+                btnProductos.Visibility = Visibility.Visible;
+                btnTienda.Visibility = Visibility.Visible;
+                btnPepe.Visibility = Visibility.Visible;
             }
+            else
+            {
+                btnHome.Visibility = Visibility.Visible;
+                btnProductos.Visibility = Visibility.Hidden;
+                btnTienda.Visibility = Visibility.Hidden;
+                btnPepe.Visibility = Visibility.Hidden;
+            }
+            
+
+            // Puedes agregar más lógica aquí si tienes más RadioButtons personalizados
         }
     }
-}
+        }
+
+    

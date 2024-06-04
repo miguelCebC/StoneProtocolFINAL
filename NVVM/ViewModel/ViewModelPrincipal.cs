@@ -31,7 +31,7 @@ namespace StoneProtocol.NVVM.ViewModel
         public ViewModelPrincipal()
         {
             VM1 = new ViewModel1();
-            CurrentView = new VistaPrincipal(); // Establecer VistaPrincipal como la vista inicial
+            CurrentView = new VistaLogin(); 
             text = "Hola";
 
             ShowHomeViewCommand = new RelayCommand(_ => ShowHomeView());

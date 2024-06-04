@@ -1,8 +1,6 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-
 
 namespace StoneProtocol.Theme
 {
@@ -66,7 +64,8 @@ namespace StoneProtocol.Theme
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
         {
-            var productWindow = new ProductWindow
+            MessageBox.Show("Comprando");
+            var productWindow = new StoneProtocol.ProductWindow
             {
                 DataContext = this.DataContext
             };

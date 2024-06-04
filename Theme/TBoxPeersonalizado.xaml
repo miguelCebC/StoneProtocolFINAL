@@ -8,53 +8,44 @@
                     <Border CornerRadius="10"
                             Background="#353340"
                             Width="Auto" Height="40">
-
                         <Grid>
                             <Rectangle StrokeThickness="1"/>
                             <TextBox Margin="1"
-                                     Text="{TemplateBinding Text}"
+                                     Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalContentAlignment="Center"
                                      Padding="5"
                                      Foreground="#CFCFCF"
                                      x:Name="Busqueda"/>
-
                             <TextBlock IsHitTestVisible="False"
                                        Text="Búsqueda"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
                                        FontSize="11"
-                                       Foreground="DarkGray"
-                                       Grid.Column="1">
-
+                                       Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=Busqueda}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Text, ElementName=Busqueda}" >
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <Trigger Property="Text" Value="eHola">
+                                                <Setter Property="Visibility" Value="Hidden"/>
+                                            </Trigger>
                                         </Style.Triggers>
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </Style>
                                 </TextBlock.Style>
-
                             </TextBlock>
-
                         </Grid>
-
-
-
-
                     </Border>
-
-
                 </ControlTemplate>
             </Setter.Value>
-
         </Setter>
-
     </Style>
-
 </ResourceDictionary>

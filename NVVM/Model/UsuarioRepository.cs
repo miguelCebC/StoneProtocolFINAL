@@ -1,5 +1,5 @@
-﻿
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace StoneProtocol.NVVM.Model
 {
@@ -16,6 +16,7 @@ namespace StoneProtocol.NVVM.Model
         {
             using (var connection = database.GetConnection())
             {
+                connection.Open();
                 string query = "INSERT INTO usuarios (nombre, email, admin) VALUES (@Nombre, @Email, @Admin)";
                 using (var cmd = new MySqlCommand(query, connection))
                 {
@@ -32,6 +33,7 @@ namespace StoneProtocol.NVVM.Model
             var usuarios = new List<Usuario>();
             using (var connection = database.GetConnection())
             {
+                connection.Open();
                 string query = "SELECT id, nombre, email, admin FROM usuarios";
                 using (var cmd = new MySqlCommand(query, connection))
                 using (var reader = cmd.ExecuteReader())
@@ -55,6 +57,7 @@ namespace StoneProtocol.NVVM.Model
         {
             using (var connection = database.GetConnection())
             {
+                connection.Open();
                 string query = "UPDATE usuarios SET nombre = @Nombre, email = @Email, admin = @Admin WHERE id = @Id";
                 using (var cmd = new MySqlCommand(query, connection))
                 {
@@ -71,6 +74,7 @@ namespace StoneProtocol.NVVM.Model
         {
             using (var connection = database.GetConnection())
             {
+                connection.Open();
                 string query = "DELETE FROM usuarios WHERE id = @Id";
                 using (var cmd = new MySqlCommand(query, connection))
                 {

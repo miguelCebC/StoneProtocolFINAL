@@ -1,27 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using StoneProtocol.NVVM.Model;
 
 namespace StoneProtocol
 {
-    /// <summary>
-    /// Lógica de interacción para ProductWindow.xaml
-    /// </summary>
     public partial class ProductWindow : Window
     {
         public ProductWindow()
         {
             InitializeComponent();
+
+            // Crear un objeto Producto de ejemplo
+            var product = new Producto
+            {
+                NombreProducto = "Producto de Ejemplo",
+                CategoriaNombre = "Categoría de Ejemplo",
+                ImageSource = "ruta/a/tu/imagen.jpg" // Asegúrate de que la ruta sea correcta
+            };
+
+            // Establecer el contexto de datos
+            this.DataContext = product;
         }
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
@@ -29,7 +27,5 @@ namespace StoneProtocol
             MessageBox.Show("Producto comprado!");
             this.Close();
         }
-
-
     }
 }
