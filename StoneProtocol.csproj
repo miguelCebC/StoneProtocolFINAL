@@ -12,12 +12,14 @@
     <None Remove="Imagenes\1.png" />
     <None Remove="Imagenes\2.png" />
     <None Remove="Imagenes\3.png" />
+    <None Remove="Imagenes\acc.png" />
     <None Remove="Imagenes\cerrar.png" />
     <None Remove="Imagenes\fuera.png" />
     <None Remove="Imagenes\menos.png" />
     <None Remove="Imagenes\movil.png" />
     <None Remove="Imagenes\portatil.png" />
     <None Remove="Imagenes\profile.png" />
+    <None Remove="Imagenes\tablet.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +34,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Imagenes\acc.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\cerrar.png">
@@ -50,6 +55,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\profile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Imagenes\tablet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

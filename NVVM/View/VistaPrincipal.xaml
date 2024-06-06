@@ -29,10 +29,10 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="10,0,0,20">
             <TextBlock Text="Buscar por Nombre:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox x:Name="SearchNameTextBox" Width="200" Margin="0,0,20,0" TextChanged="SearchNameTextBox_TextChanged"/>
+            <TextBox x:Name="SearchNameTextBox" Width="200" Margin="0,0,20,0" TextChanged="SearchNameTextBox_TextChanged" Style="{StaticResource TboxPerson}" Height="47"/>
             <TextBlock Text="Filtrar por Categoría:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <ComboBox x:Name="FilterCategoryComboBox" Width="200" SelectionChanged="FilterCategoryComboBox_SelectionChanged"/>
-            <Button Content="Buscar" Width="100" Click="SearchButton_Click" Margin="20,0,0,0"/>
+            <ComboBox x:Name="FilterCategoryComboBox" Width="200" SelectionChanged="FilterCategoryComboBox_SelectionChanged" Height="30"/>
+            <Button Content="Buscar" Width="100" Click="SearchButton_Click" Margin="20,0,0,0" Background="#5bc3ff" Foreground="White" Height="30"/>
         </StackPanel>
 
         <Border Grid.Row="2" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">

@@ -19,7 +19,6 @@ namespace StoneProtocol.NVVM.View
             _productoRepository = new ProductoRepository();
             LoadProducts();
             LoadCategories();
-            data
         }
 
         private void LoadProducts()
@@ -53,8 +52,8 @@ namespace StoneProtocol.NVVM.View
             {
                 "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
                 "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
-                "Tablets" => "pack://application:,,,/Imagenes/2.png",
-                "Accessories" => "pack://application:,,,/Imagenes/2.png",
+                "Tablets" => "pack://application:,,,/Imagenes/tablet.png",
+                "Accessories" => "pack://application:,,,/Imagenes/acc.png",
                 _ => "pack://application:,,,/Imagenes/3.png",
             };
             return new BitmapImage(new Uri(imagePath, UriKind.Absolute));

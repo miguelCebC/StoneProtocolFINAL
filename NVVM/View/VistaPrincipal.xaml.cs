@@ -36,6 +36,7 @@ namespace StoneProtocol.NVVM.View
         {
             var productos = _productoRepository.GetAllProductos();
             PopulateProductDisplays(productos);
+            PopulateVerticalProductDisplays(productos);
             PopulateCategoryFilters();
         }
 
@@ -50,9 +51,6 @@ namespace StoneProtocol.NVVM.View
             var random = new Random();
 
             HorizontalWrapPanel1.Children.Clear();
-            VerticalGridPanel.Children.Clear();
-            VerticalGridPanel.RowDefinitions.Clear();
-            VerticalGridPanel.ColumnDefinitions.Clear();
 
             foreach (var producto in productos)
             {
@@ -76,6 +74,15 @@ namespace StoneProtocol.NVVM.View
 
                 HorizontalWrapPanel1.Children.Add(productDisplay1);
             }
+        }
+
+        private void PopulateVerticalProductDisplays(IEnumerable<Producto> productos)
+        {
+            var random = new Random();
+
+            VerticalGridPanel.Children.Clear();
+            VerticalGridPanel.RowDefinitions.Clear();
+            VerticalGridPanel.ColumnDefinitions.Clear();
 
             var shuffledProductos = productos.OrderBy(x => random.Next()).ToList();
             const int productsPerRow = 5;
@@ -130,6 +137,7 @@ namespace StoneProtocol.NVVM.View
         {
             string nombre = SearchNameTextBox.Text;
             string categoria = FilterCategoryComboBox.SelectedItem as string;
+            
 
             var productos = _productoRepository.SearchProductos(nombre, categoria);
             PopulateProductDisplays(productos);
@@ -205,8 +213,8 @@ namespace StoneProtocol.NVVM.View
             {
                 "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
                 "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
-                "Tablets" => "pack://application:,,,/Imagenes/2.png",
-                "Accessories" => "pack://application:,,,/Imagenes/2.png",
+                "Tablets" => "pack://application:,,,/Imagenes/tablet.png",
+                "Accessories" => "pack://application:,,,/Imagenes/acc.png",
                 _ => "pack://application:,,,/Imagenes/3.png",
             };
             return new BitmapImage(new Uri(imagePath, UriKind.Absolute));

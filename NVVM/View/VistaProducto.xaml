@@ -41,7 +41,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <DataGrid x:Name="ProductsDataGrid" AutoGenerateColumns="False" 
-                          SelectionChanged="ProductsDataGrid_SelectionChanged"  Margin="0,0,0,20">
+                          SelectionChanged="ProductsDataGrid_SelectionChanged"  Margin="0,0,0,20" Height="337">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
                         <DataGridTextColumn Header="Nombre" Binding="{Binding NombreProducto}" Width="*"/>
