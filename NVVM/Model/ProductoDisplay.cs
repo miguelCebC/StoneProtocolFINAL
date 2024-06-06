@@ -9,5 +9,8 @@ namespace StoneProtocol.NVVM.Model
         public string CategoriaNombre { get; set; }
         public Brush BackgroundGradient { get; set; }
         public ImageSource ImageSource { get; set; }
+        public double Precio { get; set; }
+        public string Descripcion { get; set; }
+
     }
 }

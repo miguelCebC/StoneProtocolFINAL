@@ -8,5 +8,8 @@ namespace StoneProtocol.NVVM.Model
         public string Nombre { get; set; }
         public string Email { get; set; }
         public bool Admin { get; set; }
+        public string Contrasena { get; set; }
+
+
     }
 }

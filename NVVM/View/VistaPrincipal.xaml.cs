@@ -25,7 +25,7 @@ namespace StoneProtocol.NVVM.View
 
             _dragTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(0.05)
+                Interval = TimeSpan.FromSeconds(0.25)
             };
             _dragTimer.Tick += DragTimer_Tick;
         }
@@ -159,14 +159,13 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private static LinearGradientBrush GetRandomGradient()
+        private LinearGradientBrush GetRandomGradient()
         {
-            Random rand = new();
-            Color color1 = Color.FromRgb((byte)rand.Next(100, 200), (byte)rand.Next(100, 200), (byte)rand.Next(100, 200));
-            Color color2 = Color.FromRgb((byte)rand.Next(50, 150), (byte)rand.Next(50, 150), (byte)rand.Next(50, 150));
+            Random rand = new Random();
+            Color color1 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
+            Color color2 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
             return new LinearGradientBrush(color1, color2, 45);
         }
-
         private static ImageSource GetImageSourceByCategory(string category)
         {
             string imagePath = category switch

@@ -21,7 +21,7 @@ namespace StoneProtocol.NVVM.Model
             {
                 connection.Open();
                 string query = @"
-                    SELECT p.id, p.nombre_producto, p.categoria_id, c.nombre as categoria_nombre
+                    SELECT p.id, p.nombre_producto, p.categoria_id, c.nombre as categoria_nombre, p.descripcion, p.precio
                     FROM productos p
                     JOIN categorias c ON p.categoria_id = c.id";
                 using (var cmd = new MySqlCommand(query, connection))
@@ -34,7 +34,9 @@ namespace StoneProtocol.NVVM.Model
                             Id = reader.GetInt32("id"),
                             NombreProducto = reader.GetString("nombre_producto"),
                             CategoriaId = reader.GetInt32("categoria_id"),
-                            CategoriaNombre = reader.GetString("categoria_nombre")
+                            CategoriaNombre = reader.GetString("categoria_nombre"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Precio = reader.GetDouble("precio")
                         });
                     }
                 }
@@ -48,12 +50,20 @@ namespace StoneProtocol.NVVM.Model
             using (var connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "UPDATE productos SET nombre_producto = @nombreProducto, categoria_id = (SELECT id FROM categorias WHERE nombre = @categoriaNombre) WHERE id = @id";
+                string query = @"
+                    UPDATE productos 
+                    SET nombre_producto = @nombreProducto, 
+                        categoria_id = (SELECT id FROM categorias WHERE nombre = @categoriaNombre),
+                        descripcion = @descripcion,
+                        precio = @precio
+                    WHERE id = @id";
                 using (var cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@id", producto.Id);
                     cmd.Parameters.AddWithValue("@nombreProducto", producto.NombreProducto);
                     cmd.Parameters.AddWithValue("@categoriaNombre", producto.CategoriaNombre);
+                    cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
+                    cmd.Parameters.AddWithValue("@precio", producto.Precio);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -78,11 +88,15 @@ namespace StoneProtocol.NVVM.Model
             using (var connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "INSERT INTO productos (nombre_producto, categoria_id) VALUES (@nombreProducto, (SELECT id FROM categorias WHERE nombre = @categoriaNombre))";
+                string query = @"
+                    INSERT INTO productos (nombre_producto, categoria_id, descripcion, precio) 
+                    VALUES (@nombreProducto, (SELECT id FROM categorias WHERE nombre = @categoriaNombre), @descripcion, @precio)";
                 using (var cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@nombreProducto", producto.NombreProducto);
                     cmd.Parameters.AddWithValue("@categoriaNombre", producto.CategoriaNombre);
+                    cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
+                    cmd.Parameters.AddWithValue("@precio", producto.Precio);
                     cmd.ExecuteNonQuery();
                 }
             }

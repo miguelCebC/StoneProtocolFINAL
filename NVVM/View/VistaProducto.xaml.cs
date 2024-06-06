@@ -42,6 +42,8 @@ namespace StoneProtocol.NVVM.View
                 _selectedProducto = selectedProducto;
                 ProductNameTextBox.Text = _selectedProducto.NombreProducto;
                 CategoryComboBox.SelectedItem = _selectedProducto.CategoriaNombre;
+                DescriptionTextBox.Text = _selectedProducto.Descripcion;
+                PriceTextBox.Text = _selectedProducto.Precio.ToString();
                 ProductImage.Source = GetImageSourceByCategory(_selectedProducto.CategoriaNombre);
             }
         }
@@ -65,6 +67,8 @@ namespace StoneProtocol.NVVM.View
             {
                 _selectedProducto.NombreProducto = ProductNameTextBox.Text;
                 _selectedProducto.CategoriaNombre = CategoryComboBox.SelectedItem as string;
+                _selectedProducto.Descripcion = DescriptionTextBox.Text;
+                _selectedProducto.Precio = double.Parse(PriceTextBox.Text);
 
                 _productoRepository.UpdateProducto(_selectedProducto);
                 MessageBox.Show($"Producto actualizado:\nNombre: {_selectedProducto.NombreProducto}\nCategoría: {_selectedProducto.CategoriaNombre}");
@@ -96,7 +100,9 @@ namespace StoneProtocol.NVVM.View
             var newProducto = new Producto
             {
                 NombreProducto = ProductNameTextBox.Text,
-                CategoriaNombre = CategoryComboBox.SelectedItem as string
+                CategoriaNombre = CategoryComboBox.SelectedItem as string,
+                Descripcion = DescriptionTextBox.Text,
+                Precio = double.Parse(PriceTextBox.Text)
             };
 
             _productoRepository.AddProducto(newProducto);

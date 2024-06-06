@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using StoneProtocol.NVVM.Model;
 
 namespace StoneProtocol
@@ -9,22 +8,16 @@ namespace StoneProtocol
         public ProductWindow()
         {
             InitializeComponent();
-
-            // Crear un objeto Producto de ejemplo
-            var product = new Producto
-            {
-                NombreProducto = "Producto de Ejemplo",
-                CategoriaNombre = "Categoría de Ejemplo",
-                ImageSource = "ruta/a/tu/imagen.jpg" // Asegúrate de que la ruta sea correcta
-            };
-
-            // Establecer el contexto de datos
-            this.DataContext = product;
         }
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Producto comprado!");
+            this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

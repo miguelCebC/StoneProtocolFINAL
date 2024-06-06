@@ -5,9 +5,6 @@ using System.Windows.Media;
 
 namespace StoneProtocol.Theme
 {
-    /// <summary>
-    /// Lógica de interacción para ProductDisplay.xaml
-    /// </summary>
     public partial class ProductDisplay : UserControl
     {
         public ProductDisplay()
@@ -27,6 +24,12 @@ namespace StoneProtocol.Theme
 
         public static readonly DependencyProperty ImageSourceProperty =
             DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ProductDisplay), new PropertyMetadata(default(ImageSource)));
+
+        public static readonly DependencyProperty PrecioProperty =
+            DependencyProperty.Register("Precio", typeof(double), typeof(ProductDisplay), new PropertyMetadata(default(double)));
+
+        public static readonly DependencyProperty DescripcionProperty =
+            DependencyProperty.Register("Descripcion", typeof(string), typeof(ProductDisplay), new PropertyMetadata(default(string)));
 
         public string NombreProducto
         {
@@ -52,6 +55,18 @@ namespace StoneProtocol.Theme
             set { SetValue(ImageSourceProperty, value); }
         }
 
+        public double Precio
+        {
+            get { return (double)GetValue(PrecioProperty); }
+            set { SetValue(PrecioProperty, value); }
+        }
+
+        public string Descripcion
+        {
+            get { return (string)GetValue(DescripcionProperty); }
+            set { SetValue(DescripcionProperty, value); }
+        }
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is NVVM.Model.ProductoDisplay viewModel)
@@ -60,12 +75,13 @@ namespace StoneProtocol.Theme
                 CategoriaNombre = viewModel.CategoriaNombre;
                 BackgroundGradient = viewModel.BackgroundGradient;
                 ImageSource = viewModel.ImageSource;
+                Precio = viewModel.Precio;
+                Descripcion = viewModel.Descripcion;
             }
         }
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Comprando");
             var productWindow = new StoneProtocol.ProductWindow
             {
                 DataContext = this.DataContext

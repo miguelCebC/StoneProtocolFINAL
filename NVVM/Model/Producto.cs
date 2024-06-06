@@ -7,5 +7,9 @@
         public int CategoriaId { get; set; }
         public string CategoriaNombre { get; set; }
         public string ImageSource { get; set; }
+
+        public string Descripcion { get; set; }
+        public double Precio { get; set; }
+
     }
 }
