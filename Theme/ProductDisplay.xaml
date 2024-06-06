@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:StoneProtocol.Theme"
              mc:Ignorable="d" 
              MouseDown="UserControl_MouseDown"
-             d:DesignHeight="400" d:DesignWidth="300">
-    <Border x:Name="MainBorder" CornerRadius="10" Background="{Binding BackgroundGradient}">
+             d:DesignHeight="420" d:DesignWidth="300">
+    <Border x:Name="MainBorder" CornerRadius="10" Background="{Binding BackgroundGradient}" Margin="0,10,0,10">
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

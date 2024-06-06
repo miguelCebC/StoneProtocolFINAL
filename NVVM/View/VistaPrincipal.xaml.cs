@@ -48,7 +48,9 @@ namespace StoneProtocol.NVVM.View
                     NombreProducto = producto.NombreProducto,
                     CategoriaNombre = producto.CategoriaNombre,
                     BackgroundGradient = GetRandomGradient(),
-                    ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
+                    ImageSource = GetImageSourceByCategory(producto.CategoriaNombre),
+                     Precio = producto.Precio,
+                    Descripcion = producto.Descripcion,
                 };
 
                 var productDisplay1 = new ProductDisplay
@@ -84,6 +86,8 @@ namespace StoneProtocol.NVVM.View
                 {
                     NombreProducto = producto.NombreProducto,
                     CategoriaNombre = producto.CategoriaNombre,
+                    Precio = producto.Precio,
+                    Descripcion = producto.Descripcion,
                     BackgroundGradient = GetRandomGradient(),
                     ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
                 };

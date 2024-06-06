@@ -19,6 +19,7 @@ namespace StoneProtocol.NVVM.View
             _productoRepository = new ProductoRepository();
             LoadProducts();
             LoadCategories();
+            data
         }
 
         private void LoadProducts()
@@ -28,11 +29,9 @@ namespace StoneProtocol.NVVM.View
 
         private void LoadCategories()
         {
-            CategoryComboBox.Items.Add("Smartphones");
-            CategoryComboBox.Items.Add("Laptops");
-            CategoryComboBox.Items.Add("Tablets");
-            CategoryComboBox.Items.Add("Accessories");
-            CategoryComboBox.Items.Add("Other");
+            var categories = _productoRepository.GetAllCategories();
+            CategoryComboBox.ItemsSource = categories;
+            FilterCategoryComboBox.ItemsSource = categories;
         }
 
         private void ProductsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -108,6 +107,22 @@ namespace StoneProtocol.NVVM.View
             _productoRepository.AddProducto(newProducto);
             MessageBox.Show($"Producto añadido:\nNombre: {newProducto.NombreProducto}\nCategoría: {newProducto.CategoriaNombre}");
             LoadProducts(); // Refrescar la lista de productos
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string nombre = SearchNameTextBox.Text;
+            string categoria = FilterCategoryComboBox.SelectedItem as string;
+
+            ProductsDataGrid.ItemsSource = _productoRepository.SearchProductos(nombre, categoria);
+        }
+
+        private void FilterCategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string nombre = SearchNameTextBox.Text;
+            string categoria = FilterCategoryComboBox.SelectedItem as string;
+
+            ProductsDataGrid.ItemsSource = _productoRepository.SearchProductos(nombre, categoria);
         }
     }
 }

@@ -27,34 +27,47 @@
         </Style>
     </UserControl.Resources>
     <Border Background="#272537" Padding="20" CornerRadius="10">
-        <StackPanel>
-            <DataGrid x:Name="ProductsDataGrid" AutoGenerateColumns="False" 
-                      SelectionChanged="ProductsDataGrid_SelectionChanged" Height="300" Margin="0,0,0,20">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
-                    <DataGridTextColumn Header="Nombre" Binding="{Binding NombreProducto}" Width="*"/>
-                    <DataGridTextColumn Header="Categoría" Binding="{Binding CategoriaNombre}" Width="*"/>
-                    <DataGridTextColumn Header="Descripción" Binding="{Binding Descripcion}" Width="*"/>
-                    <DataGridTextColumn Header="Precio" Binding="{Binding Precio}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <TextBlock Text="Nombre del Producto" HorizontalAlignment="Center"/>
-            <TextBox x:Name="ProductNameTextBox" Width="400"/>
-            <TextBlock Text="Categoría" HorizontalAlignment="Center" />
-            <ComboBox x:Name="CategoryComboBox" Width="400"/>
-            <TextBlock Text="Descripción" HorizontalAlignment="Center" />
-            <TextBox x:Name="DescriptionTextBox" Width="400"/>
-            <TextBlock Text="Precio" HorizontalAlignment="Center" />
-            <TextBox x:Name="PriceTextBox" Width="400"/>
-
-            <Image x:Name="ProductImage" Width="200" Height="200" Margin="0,10,0,0"/>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Guardar" Width="100" Click="SaveButton_Click"/>
-                <Button Content="Borrar" Width="100" Click="DeleteButton_Click"/>
-                <Button Content="Añadir Nuevo" Width="100" Click="AddButton_Click"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                <TextBlock Text="Buscar por Nombre" HorizontalAlignment="Left"/>
+                <TextBox x:Name="SearchNameTextBox" Width="180"/>
+                <TextBlock Text="Filtrar por Categoría" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="FilterCategoryComboBox" Width="180" SelectionChanged="FilterCategoryComboBox_SelectionChanged"/>
+                <Button Content="Buscar" Width="100" Click="SearchButton_Click"/>
             </StackPanel>
-        </StackPanel>
+            <StackPanel Grid.Column="1">
+                <DataGrid x:Name="ProductsDataGrid" AutoGenerateColumns="False" 
+                          SelectionChanged="ProductsDataGrid_SelectionChanged"  Margin="0,0,0,20">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding NombreProducto}" Width="*"/>
+                        <DataGridTextColumn Header="Categoría" Binding="{Binding CategoriaNombre}" Width="*"/>
+                        <DataGridTextColumn Header="Descripción" Binding="{Binding Descripcion}" Width="*"/>
+                        <DataGridTextColumn Header="Precio" Binding="{Binding Precio}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="Nombre del Producto" HorizontalAlignment="Center"/>
+                <TextBox x:Name="ProductNameTextBox" Width="400"/>
+                <TextBlock Text="Categoría" HorizontalAlignment="Center" />
+                <ComboBox x:Name="CategoryComboBox" Width="400"/>
+                <TextBlock Text="Descripción" HorizontalAlignment="Center" />
+                <TextBox x:Name="DescriptionTextBox" Width="400"/>
+                <TextBlock Text="Precio" HorizontalAlignment="Center" />
+                <TextBox x:Name="PriceTextBox" Width="400"/>
+
+                <Image x:Name="ProductImage" Width="200" Height="200" Margin="0,10,0,0"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Guardar" Width="100" Click="SaveButton_Click"/>
+                    <Button Content="Borrar" Width="100" Click="DeleteButton_Click"/>
+                    <Button Content="Añadir Nuevo" Width="100" Click="AddButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

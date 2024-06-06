@@ -96,16 +96,6 @@
                              Visibility="Hidden"/>
             </StackPanel>
 
-            <TextBox Width="250"
-                     Height="50"
-                     VerticalContentAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Margin="10"
-                     Grid.Row="0"
-                     Grid.Column="1"
-                     Text="Busqueda"
-                     Style="{StaticResource TboxPerson}"/>
-
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             Margin="10"
