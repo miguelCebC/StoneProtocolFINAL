@@ -27,16 +27,13 @@
         Margin="10,0,0,20"/>
 
         <Border Grid.Row="1" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <StackPanel x:Name="HorizontalStackPanel1" Orientation="Horizontal"
-                        PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown"
-                        PreviewMouseMove="StackPanel_PreviewMouseMove"
-                        PreviewMouseLeftButtonUp="StackPanel_PreviewMouseLeftButtonUp"
-                        TouchDown="StackPanel_TouchDown"
-                        TouchMove="StackPanel_TouchMove"
-                        TouchUp="StackPanel_TouchUp">
+            <ScrollViewer x:Name="HorizontalScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                          PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown"
+                          PreviewMouseMove="ScrollViewer_PreviewMouseMove"
+                          PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp">
+                <WrapPanel x:Name="HorizontalWrapPanel1">
                     <!-- Aquí se agregarán dinámicamente los controles ProductDisplay -->
-                </StackPanel>
+                </WrapPanel>
             </ScrollViewer>
         </Border>
 
@@ -46,16 +43,13 @@
                Margin="10,20,0,20"/>
 
         <Border Grid.Row="3" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <StackPanel x:Name="VerticalStackPanel" Orientation="Vertical"
-                        PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown"
-                        PreviewMouseMove="StackPanel_PreviewMouseMove"
-                        PreviewMouseLeftButtonUp="StackPanel_PreviewMouseLeftButtonUp"
-                        TouchDown="StackPanel_TouchDown"
-                        TouchMove="StackPanel_TouchMove"
-                        TouchUp="StackPanel_TouchUp">
+            <ScrollViewer x:Name="VerticalScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                          PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown"
+                          PreviewMouseMove="ScrollViewer_PreviewMouseMove"
+                          PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp">
+                <Grid x:Name="VerticalGridPanel">
                     <!-- Aquí se agregarán dinámicamente las filas con los controles ProductDisplay -->
-                </StackPanel>
+                </Grid>
             </ScrollViewer>
         </Border>
     </Grid>

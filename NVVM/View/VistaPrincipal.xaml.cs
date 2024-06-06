@@ -1,25 +1,33 @@
-﻿
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using StoneProtocol.NVVM.Model;
 using StoneProtocol.Theme;
 
 namespace StoneProtocol.NVVM.View
 {
-  
     public partial class VistaPrincipal : UserControl
     {
         private Point _startPoint;
         private bool _isDragging;
-        private TranslateTransform _transform;
+        private ScrollViewer _scrollViewer;
+        private DispatcherTimer _dragTimer;
 
         public VistaPrincipal()
         {
             InitializeComponent();
             LoadProducts();
+
+            _dragTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(0.05)
+            };
+            _dragTimer.Tick += DragTimer_Tick;
         }
 
         private void LoadProducts()
@@ -28,8 +36,10 @@ namespace StoneProtocol.NVVM.View
             var productos = productoRepository.GetAllProductos();
             var random = new Random();
 
-            HorizontalStackPanel1.Children.Clear();
-            VerticalStackPanel.Children.Clear();
+            HorizontalWrapPanel1.Children.Clear();
+            VerticalGridPanel.Children.Clear();
+            VerticalGridPanel.RowDefinitions.Clear();
+            VerticalGridPanel.ColumnDefinitions.Clear();
 
             foreach (var producto in productos)
             {
@@ -49,188 +59,111 @@ namespace StoneProtocol.NVVM.View
                     Height = 300
                 };
 
-                HorizontalStackPanel1.Children.Add(productDisplay1);
+                HorizontalWrapPanel1.Children.Add(productDisplay1);
             }
 
             // Shuffle the products list for the second panel
             var shuffledProductos = productos.OrderBy(x => random.Next()).ToList();
 
-            // Adding products to the second panel with rows of 5 products each
+            // Adding products to the second panel with rows and columns
             const int productsPerRow = 5;
-            for (int i = 0; i < shuffledProductos.Count; i += productsPerRow)
+            const int rowCount = 5;
+            for (int i = 0; i < rowCount; i++)
             {
-                var rowStackPanel = new StackPanel
+                VerticalGridPanel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            }
+            for (int j = 0; j < productsPerRow; j++)
+            {
+                VerticalGridPanel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            }
+
+            for (int i = 0; i < shuffledProductos.Count; i++)
+            {
+                var producto = shuffledProductos[i];
+                var viewModel = new ProductoDisplay
                 {
-                    Orientation = Orientation.Horizontal,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Margin = new Thickness(0, 0, 0, 20)
+                    NombreProducto = producto.NombreProducto,
+                    CategoriaNombre = producto.CategoriaNombre,
+                    BackgroundGradient = GetRandomGradient(),
+                    ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
                 };
 
-                for (int j = i; j < i + productsPerRow && j < shuffledProductos.Count; j++)
+                var productDisplay = new ProductDisplay
                 {
-                    var producto = shuffledProductos[j];
-                    var viewModel = new ProductoDisplay
-                    {
-                        NombreProducto = producto.NombreProducto,
-                        CategoriaNombre = producto.CategoriaNombre,
-                        BackgroundGradient = GetRandomGradient(),
-                        ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
-                    };
+                    DataContext = viewModel,
+                    Margin = new Thickness(20, 0, 40, 0),
+                    Width = 400,
+                    Height = 300
+                };
 
-                    var productDisplay = new ProductDisplay
-                    {
-                        DataContext = viewModel,
-                        Margin = new Thickness(20, 0, 40, 0),
-                        Width = 400,
-                        Height = 300
-                    };
+                Grid.SetRow(productDisplay, i / productsPerRow);
+                Grid.SetColumn(productDisplay, i % productsPerRow);
 
-                    rowStackPanel.Children.Add(productDisplay);
-                }
-
-                VerticalStackPanel.Children.Add(rowStackPanel);
+                VerticalGridPanel.Children.Add(productDisplay);
             }
         }
 
-        private void StackPanel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is StackPanel stackPanel && e.OriginalSource is not Button)
+            if (e.OriginalSource is Button)
+                return; // Ignore the event if it comes from a button
+
+            if (sender is ScrollViewer scrollViewer)
             {
-                _startPoint = e.GetPosition(this);
-                _transform = stackPanel.RenderTransform as TranslateTransform ?? new TranslateTransform();
-                stackPanel.RenderTransform = _transform;
+                _scrollViewer = scrollViewer;
+                _startPoint = e.GetPosition(scrollViewer);
+                _dragTimer.Start();
+            }
+        }
+
+        private void ScrollViewer_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isDragging && _scrollViewer != null)
+            {
+                var currentPoint = e.GetPosition(_scrollViewer);
+                var offsetX = _startPoint.X - currentPoint.X;
+                var offsetY = _startPoint.Y - currentPoint.Y;
+
+                if (_scrollViewer.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled)
+                {
+                    _scrollViewer.ScrollToHorizontalOffset(_scrollViewer.HorizontalOffset + offsetX);
+                }
+
+                if (_scrollViewer.VerticalScrollBarVisibility != ScrollBarVisibility.Disabled)
+                {
+                    _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset + offsetY);
+                }
+
+                _startPoint = currentPoint;
+            }
+        }
+
+        private void ScrollViewer_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _dragTimer.Stop();
+            _isDragging = false;
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.ReleaseMouseCapture();
+                _scrollViewer = null;
+            }
+        }
+
+        private void DragTimer_Tick(object sender, EventArgs e)
+        {
+            _dragTimer.Stop();
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.CaptureMouse();
                 _isDragging = true;
-                stackPanel.CaptureMouse();
-            }
-        }
-
-        private void StackPanel_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (_isDragging && sender is StackPanel stackPanel)
-            {
-                var currentPoint = e.GetPosition(this);
-                if (stackPanel.Orientation == Orientation.Horizontal)
-                {
-                    var offset = currentPoint.X - _startPoint.X;
-                    var newTransformX = _transform.X + offset;
-
-                    // Limitar el desplazamiento dentro del contenido
-                    var maxOffset = ((FrameworkElement)stackPanel.Parent).ActualWidth - stackPanel.ActualWidth;
-                    if (newTransformX < maxOffset)
-                    {
-                        newTransformX = maxOffset;
-                    }
-                    if (newTransformX > 0)
-                    {
-                        newTransformX = 0;
-                    }
-
-                    _transform.X = newTransformX;
-                    _startPoint = currentPoint; // Reset start point for smoother dragging
-                }
-                else
-                {
-                    var offset = currentPoint.Y - _startPoint.Y;
-                    var newTransformY = _transform.Y + offset;
-
-                    // Limitar el desplazamiento dentro del contenido
-                    var maxOffset = ((FrameworkElement)stackPanel.Parent).ActualHeight - stackPanel.ActualHeight;
-                    if (newTransformY < maxOffset)
-                    {
-                        newTransformY = maxOffset;
-                    }
-                    if (newTransformY > 0)
-                    {
-                        newTransformY = 0;
-                    }
-
-                    _transform.Y = newTransformY;
-                    _startPoint = currentPoint; // Reset start point for smoother dragging
-                }
-            }
-        }
-
-        private void StackPanel_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is StackPanel stackPanel)
-            {
-                _isDragging = false;
-                stackPanel.ReleaseMouseCapture();
-            }
-        }
-
-        private void StackPanel_TouchDown(object sender, TouchEventArgs e)
-        {
-            if (sender is StackPanel stackPanel)
-            {
-                _startPoint = e.GetTouchPoint(this).Position;
-                _transform = stackPanel.RenderTransform as TranslateTransform ?? new TranslateTransform();
-                stackPanel.RenderTransform = _transform;
-                _isDragging = true;
-                stackPanel.CaptureTouch(e.TouchDevice);
-            }
-        }
-
-        private void StackPanel_TouchMove(object sender, TouchEventArgs e)
-        {
-            if (_isDragging && sender is StackPanel stackPanel)
-            {
-                var currentPoint = e.GetTouchPoint(this).Position;
-                if (stackPanel.Orientation == Orientation.Horizontal)
-                {
-                    var offset = currentPoint.X - _startPoint.X;
-                    var newTransformX = _transform.X + offset;
-
-                    // Limitar el desplazamiento dentro del contenido
-                    var maxOffset = ((FrameworkElement)stackPanel.Parent).ActualWidth - stackPanel.ActualWidth;
-                    if (newTransformX < maxOffset)
-                    {
-                        newTransformX = maxOffset;
-                    }
-                    if (newTransformX > 0)
-                    {
-                        newTransformX = 0;
-                    }
-
-                    _transform.X = newTransformX;
-                    _startPoint = currentPoint; // Reset start point for smoother dragging
-                }
-                else
-                {
-                    var offset = currentPoint.Y - _startPoint.Y;
-                    var newTransformY = _transform.Y + offset;
-
-                    // Limitar el desplazamiento dentro del contenido
-                    var maxOffset = ((FrameworkElement)stackPanel.Parent).ActualHeight - stackPanel.ActualHeight;
-                    if (newTransformY < maxOffset)
-                    {
-                        newTransformY = maxOffset;
-                    }
-                    if (newTransformY > 0)
-                    {
-                        newTransformY = 0;
-                    }
-
-                    _transform.Y = newTransformY;
-                    _startPoint = currentPoint; // Reset start point for smoother dragging
-                }
-            }
-        }
-
-        private void StackPanel_TouchUp(object sender, TouchEventArgs e)
-        {
-            if (sender is StackPanel stackPanel)
-            {
-                _isDragging = false;
-                stackPanel.ReleaseTouchCapture(e.TouchDevice);
             }
         }
 
         private static LinearGradientBrush GetRandomGradient()
         {
             Random rand = new();
-            Color color1 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
-            Color color2 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
+            Color color1 = Color.FromRgb((byte)rand.Next(100, 200), (byte)rand.Next(100, 200), (byte)rand.Next(100, 200));
+            Color color2 = Color.FromRgb((byte)rand.Next(50, 150), (byte)rand.Next(50, 150), (byte)rand.Next(50, 150));
             return new LinearGradientBrush(color1, color2, 45);
         }
 

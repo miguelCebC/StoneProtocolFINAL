@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoneProtocol.Theme"
              mc:Ignorable="d" 
+              MouseDown="UserControl_MouseDown"
  d:DesignHeight="400" d:DesignWidth="300">    <Border x:Name="MainBorder" CornerRadius="10" Background="{Binding BackgroundGradient}">
         <Grid Margin="20">
             <Grid.RowDefinitions>

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace StoneProtocol.Theme
@@ -70,6 +71,11 @@ namespace StoneProtocol.Theme
                 DataContext = this.DataContext
             };
             productWindow.ShowDialog();
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
