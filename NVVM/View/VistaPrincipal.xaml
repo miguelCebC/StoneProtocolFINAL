@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,15 +19,23 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock 
-        Grid.Row="0"
-        Grid.Column="0"
-        Text="Descubre"
-        Foreground="White"
-        FontSize="36"
-        HorizontalAlignment="Left"
-        Margin="10,0,0,20"/>
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="Descubre"
+            Foreground="White"
+            FontSize="36"
+            HorizontalAlignment="Left"
+            Margin="10,0,0,20"/>
 
-        <Border Grid.Row="1" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="10,0,0,20">
+            <TextBlock Text="Buscar por Nombre:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="SearchNameTextBox" Width="200" Margin="0,0,20,0" TextChanged="SearchNameTextBox_TextChanged"/>
+            <TextBlock Text="Filtrar por Categoría:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <ComboBox x:Name="FilterCategoryComboBox" Width="200" SelectionChanged="FilterCategoryComboBox_SelectionChanged"/>
+            <Button Content="Buscar" Width="100" Click="SearchButton_Click" Margin="20,0,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="2" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
             <ScrollViewer x:Name="HorizontalScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
                           PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown"
                           PreviewMouseMove="ScrollViewer_PreviewMouseMove"
@@ -37,12 +46,12 @@
             </ScrollViewer>
         </Border>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Más Vistos"
-               Foreground="White"
-               FontSize="36"
-               Margin="10,20,0,20"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Más Vistos"
+                   Foreground="White"
+                   FontSize="36"
+                   Margin="10,20,0,20"/>
 
-        <Border Grid.Row="3" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
+        <Border Grid.Row="4" Grid.Column="0" Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
             <ScrollViewer x:Name="VerticalScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
                           PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown"
                           PreviewMouseMove="ScrollViewer_PreviewMouseMove"

@@ -10,6 +10,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
+        
         MouseDown="Window_MouseDown">
     <Window.DataContext>
         <viewModel:ViewModelPrincipal />

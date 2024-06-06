@@ -17,10 +17,12 @@ namespace StoneProtocol.NVVM.View
         private bool _isDragging;
         private ScrollViewer _scrollViewer;
         private DispatcherTimer _dragTimer;
+        private ProductoRepository _productoRepository;
 
         public VistaPrincipal()
         {
             InitializeComponent();
+            _productoRepository = new ProductoRepository();
             LoadProducts();
 
             _dragTimer = new DispatcherTimer
@@ -32,8 +34,19 @@ namespace StoneProtocol.NVVM.View
 
         private void LoadProducts()
         {
-            var productoRepository = new ProductoRepository();
-            var productos = productoRepository.GetAllProductos();
+            var productos = _productoRepository.GetAllProductos();
+            PopulateProductDisplays(productos);
+            PopulateCategoryFilters();
+        }
+
+        private void PopulateCategoryFilters()
+        {
+            var categories = _productoRepository.GetAllCategories();
+            FilterCategoryComboBox.ItemsSource = categories;
+        }
+
+        private void PopulateProductDisplays(IEnumerable<Producto> productos)
+        {
             var random = new Random();
 
             HorizontalWrapPanel1.Children.Clear();
@@ -49,7 +62,7 @@ namespace StoneProtocol.NVVM.View
                     CategoriaNombre = producto.CategoriaNombre,
                     BackgroundGradient = GetRandomGradient(),
                     ImageSource = GetImageSourceByCategory(producto.CategoriaNombre),
-                     Precio = producto.Precio,
+                    Precio = producto.Precio,
                     Descripcion = producto.Descripcion,
                 };
 
@@ -64,10 +77,7 @@ namespace StoneProtocol.NVVM.View
                 HorizontalWrapPanel1.Children.Add(productDisplay1);
             }
 
-            // Shuffle the products list for the second panel
             var shuffledProductos = productos.OrderBy(x => random.Next()).ToList();
-
-            // Adding products to the second panel with rows and columns
             const int productsPerRow = 5;
             const int rowCount = 5;
             for (int i = 0; i < rowCount; i++)
@@ -105,6 +115,24 @@ namespace StoneProtocol.NVVM.View
 
                 VerticalGridPanel.Children.Add(productDisplay);
             }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string nombre = SearchNameTextBox.Text;
+            string categoria = FilterCategoryComboBox.SelectedItem as string;
+
+            var productos = _productoRepository.SearchProductos(nombre, categoria);
+            PopulateProductDisplays(productos);
+        }
+
+        private void FilterCategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string nombre = SearchNameTextBox.Text;
+            string categoria = FilterCategoryComboBox.SelectedItem as string;
+
+            var productos = _productoRepository.SearchProductos(nombre, categoria);
+            PopulateProductDisplays(productos);
         }
 
         private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -170,6 +198,7 @@ namespace StoneProtocol.NVVM.View
             Color color2 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
             return new LinearGradientBrush(color1, color2, 45);
         }
+
         private static ImageSource GetImageSourceByCategory(string category)
         {
             string imagePath = category switch
@@ -181,6 +210,11 @@ namespace StoneProtocol.NVVM.View
                 _ => "pack://application:,,,/Imagenes/3.png",
             };
             return new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+        }
+
+        private void SearchNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
