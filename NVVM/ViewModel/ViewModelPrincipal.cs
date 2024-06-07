@@ -27,6 +27,8 @@ namespace StoneProtocol.NVVM.ViewModel
         public ICommand ShowStoreViewCommand { get; private set; }
         public ICommand ShowVistaPrincipalCommand { get; private set; }
         public ICommand CloseCommand { get; private set; }
+        public ICommand PedidosCommand { get; private set; }
+
 
         public ViewModelPrincipal()
         {
@@ -39,11 +41,17 @@ namespace StoneProtocol.NVVM.ViewModel
             ShowStoreViewCommand = new RelayCommand(_ => ShowStoreView());
             ShowVistaPrincipalCommand = new RelayCommand(_ => ShowVistaPrincipal());
             CloseCommand = new RelayCommand(_ => CloseApplication());
+            PedidosCommand = new RelayCommand(_ => ShowPedidosView());
         }
 
         public void ShowHomeView()
         {
             CurrentView = new VistaPrincipal();
+        }
+
+        public void ShowPedidosView()
+        {
+            CurrentView = new VistaFactura();
         }
 
         public void ShowProductsView()

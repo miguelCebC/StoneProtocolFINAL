@@ -94,6 +94,8 @@ namespace StoneProtocol
             if (usuario.Admin == true) {
                 btnHome.Visibility = Visibility.Visible; 
                 btnProductos.Visibility = Visibility.Visible;
+                btnPepe.Visibility = Visibility.Visible;
+
                 //btnTienda.Visibility = Visibility.Visible;
                 //btnPepe.Visibility = Visibility.Visible;
 

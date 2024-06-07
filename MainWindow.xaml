@@ -81,6 +81,14 @@
                          Style="{StaticResource MenuButton}"
                          Command="{Binding ShowStoreViewCommand}"
                      Visibility="Collapsed"/>
+                <RadioButton x:Name="btnPepe"
+             Content="Pepe"
+             Height="50"
+             Foreground="White"
+             FontSize="14"
+             Style="{StaticResource MenuButton}"
+             Command="{Binding PedidosCommand}"
+             Visibility="Hidden"/>
 
                 <RadioButton Content="Salir"
                              Height="50"
@@ -89,14 +97,7 @@
                              Style="{StaticResource MenuButton}"
                              Command="{Binding CloseCommand}"/>
 
-                <RadioButton x:Name="btnPepe"
-                             Content="Pepe"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButton}"
-                             Command="{Binding ShowHomeViewCommand}"
-                             Visibility="Hidden"/>
+
             </StackPanel>
 
             <ContentControl Grid.Row="1"
