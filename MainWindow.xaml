@@ -38,7 +38,8 @@
                     <Image Source="/Imagenes/1.png" Stretch="Uniform"/>
                 </Button>
             </StackPanel>
-
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,1642,0">
+                <Image Source="/Imagenes/stone.png" Width="50" Height="50" Margin="10,0,0,0"/>
             <TextBlock Text="Stone Protocol"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
@@ -48,7 +49,7 @@
                        Grid.Row="0"
                        Grid.Column="0"
                       />
-
+            </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <RadioButton 
                          x:Name="btnHome"
