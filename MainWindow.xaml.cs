@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using StoneProtocol.NVVM.Model;
+using StoneProtocol.NVVM.ViewModel;
 using StoneProtocol.Theme;
 namespace StoneProtocol
 {
@@ -91,10 +92,11 @@ namespace StoneProtocol
         public void HandleLogin(Usuario usuario)
         {
             if (usuario.Admin == true) {
-                btnHome.Visibility = Visibility.Visible;
+                btnHome.Visibility = Visibility.Visible; 
                 btnProductos.Visibility = Visibility.Visible;
-                btnTienda.Visibility = Visibility.Visible;
-                btnPepe.Visibility = Visibility.Visible;
+                //btnTienda.Visibility = Visibility.Visible;
+                //btnPepe.Visibility = Visibility.Visible;
+
             }
             else
             {
@@ -103,9 +105,17 @@ namespace StoneProtocol
                 btnTienda.Visibility = Visibility.Hidden;
                 btnPepe.Visibility = Visibility.Hidden;
             }
-            
+            InvokeHomeCommand();
 
-            // Puedes agregar más lógica aquí si tienes más RadioButtons personalizados
+
+        }
+        public void InvokeHomeCommand()
+        {
+            var viewModelPrincipal = (ViewModelPrincipal)this.DataContext;
+            if (viewModelPrincipal.ShowHomeViewCommand.CanExecute(null))
+            {
+                viewModelPrincipal.ShowHomeViewCommand.Execute(null);
+            }
         }
     }
         }

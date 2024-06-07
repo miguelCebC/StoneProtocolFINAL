@@ -58,7 +58,8 @@
                          FontSize="14"
                          Style="{StaticResource MenuButton}"
                          Command="{Binding ShowHomeViewCommand}"
-                     Visibility="Collapsed"/>
+                    Visibility="Collapsed"
+                     />
 
                 <RadioButton 
                          x:Name="btnProductos"

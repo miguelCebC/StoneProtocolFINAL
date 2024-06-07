@@ -35,7 +35,7 @@ namespace StoneProtocol.NVVM.View
 
             if (usuario != null)
             {
-                MessageBox.Show("Inicio de sesión exitoso");
+               
                 ((MainWindow)Application.Current.MainWindow).HandleLogin(usuario);
             }
             else
