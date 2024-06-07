@@ -16,15 +16,27 @@
     </UserControl.Resources>
     <Grid>
         <!-- Panel de login centrado -->
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="644">
+            <TextBlock Text="Stone Protocol"
+           
+VerticalAlignment="Center"
+HorizontalAlignment="Center"
+Foreground="White"
+FontSize="24"
+Margin="0,0,0,20" FontWeight="Bold"/>
+
+            <Image Source="C:\Users\Mike PC\Desktop\Final\miguelCebC\StoneProtocolFINAL\Imagenes\stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
+            
             <TextBlock Text="Iniciar Sesión"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Foreground="White"
                        FontSize="22"
-                       Margin="0,0,0,20"/>
+                       Margin="0,10,0,20"/>
 
             <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,10,0,0" Style="{StaticResource TboxPerson}"/>
+            <TextBox Name="NeTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,10,0,0" Style="{StaticResource TboxPerson}"/>
+
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
                 <Button Name="BotonRegistrar" Content="Registrarse" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>

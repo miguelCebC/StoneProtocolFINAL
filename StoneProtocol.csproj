@@ -19,6 +19,7 @@
     <None Remove="Imagenes\movil.png" />
     <None Remove="Imagenes\portatil.png" />
     <None Remove="Imagenes\profile.png" />
+    <None Remove="Imagenes\stone.png" />
     <None Remove="Imagenes\tablet.png" />
   </ItemGroup>
 
@@ -55,6 +56,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\profile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Imagenes\stone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Imagenes\tablet.png">
