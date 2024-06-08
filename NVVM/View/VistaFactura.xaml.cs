@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,13 +18,27 @@ namespace StoneProtocol.NVVM.View
         public VistaFactura()
         {
             InitializeComponent();
-            _facturaRepository = new FacturaRepository();
-            LoadFacturas();
+            try
+            {
+                _facturaRepository = new FacturaRepository();
+                LoadFacturas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing VistaFactura: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LoadFacturas()
         {
-            FacturasDataGrid.ItemsSource = _facturaRepository.GetAllFacturas();
+            try
+            {
+                FacturasDataGrid.ItemsSource = _facturaRepository.GetAllFacturas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading facturas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void FacturasDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,7 +72,6 @@ namespace StoneProtocol.NVVM.View
                     Margin = new Thickness(20, 0, 40, 0),
                     Width = 400,
                     Height = 300
-                    
                 };
 
                 LineasFacturaWrapPanel.Children.Add(productDisplay);
@@ -66,13 +80,20 @@ namespace StoneProtocol.NVVM.View
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var fecha = SearchDateDatePicker.SelectedDate;
-            var facturas = _facturaRepository.GetAllFacturas();
-            if (fecha.HasValue)
+            try
             {
-                facturas = facturas.Where(f => f.Fecha.Date == fecha.Value.Date).ToList();
+                var fecha = SearchDateDatePicker.SelectedDate;
+                var facturas = _facturaRepository.GetAllFacturas();
+                if (fecha.HasValue)
+                {
+                    facturas = facturas.Where(f => f.Fecha.Date == fecha.Value.Date).ToList();
+                }
+                FacturasDataGrid.ItemsSource = facturas;
             }
-            FacturasDataGrid.ItemsSource = facturas;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching facturas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private LinearGradientBrush GetRandomGradient()

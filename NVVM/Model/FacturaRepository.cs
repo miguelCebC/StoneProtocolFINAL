@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace StoneProtocol.NVVM.Model
@@ -16,31 +17,39 @@ namespace StoneProtocol.NVVM.Model
         {
             var facturas = new List<Factura>();
 
-            using (var connection = database.GetConnection())
+            try
             {
-                connection.Open();
-                string query = @"
-                    SELECT f.id, f.fecha, f.usuario_id
-                    FROM facturas f";
-                using (var cmd = new MySqlCommand(query, connection))
-                using (var reader = cmd.ExecuteReader())
+                using (var connection = database.GetConnection())
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    string query = @"
+                        SELECT f.id, f.fecha, f.usuario_id
+                        FROM facturas f";
+                    using (var cmd = new MySqlCommand(query, connection))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        facturas.Add(new Factura
+                        while (reader.Read())
                         {
-                            Id = reader.GetInt32("id"),
-                            Fecha = reader.GetDateTime("fecha"),
-                            UsuarioId = reader.GetInt32("usuario_id"),
-                            LineasFactura = new List<LineaFactura>()
-                        });
+                            facturas.Add(new Factura
+                            {
+                                Id = reader.GetInt32("id"),
+                                Fecha = reader.GetDateTime("fecha"),
+                                UsuarioId = reader.GetInt32("usuario_id"),
+                                LineasFactura = new List<LineaFactura>()
+                            });
+                        }
                     }
                 }
-            }
 
-            foreach (var factura in facturas)
+                foreach (var factura in facturas)
+                {
+                    factura.LineasFactura = GetLineasFacturaByFacturaId(factura.Id);
+                }
+            }
+            catch (Exception ex)
             {
-                factura.LineasFactura = GetLineasFacturaByFacturaId(factura.Id);
+                // Log or handle the exception as needed
+                throw new Exception($"Error retrieving facturas: {ex.Message}");
             }
 
             return facturas;
@@ -50,42 +59,50 @@ namespace StoneProtocol.NVVM.Model
         {
             var lineasFactura = new List<LineaFactura>();
 
-            using (var connection = database.GetConnection())
+            try
             {
-                connection.Open();
-                string query = @"
-                    SELECT lf.id, lf.factura_id, lf.producto_id, lf.cantidad, lf.precio_unitario,
-                           p.nombre_producto, p.categoria_id, c.nombre as categoria_nombre, p.descripcion, p.precio
-                    FROM lineas_factura lf
-                    JOIN productos p ON lf.producto_id = p.id
-                    JOIN categorias c ON p.categoria_id = c.id
-                    WHERE lf.factura_id = @FacturaId";
-                using (var cmd = new MySqlCommand(query, connection))
+                using (var connection = database.GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@FacturaId", facturaId);
-                    using (var reader = cmd.ExecuteReader())
+                    connection.Open();
+                    string query = @"
+                        SELECT lf.id, lf.factura_id, lf.producto_id, lf.cantidad, lf.precio_unitario,
+                               p.nombre_producto, p.categoria_id, c.nombre as categoria_nombre, p.descripcion, p.precio
+                        FROM lineas_factura lf
+                        JOIN productos p ON lf.producto_id = p.id
+                        JOIN categorias c ON p.categoria_id = c.id
+                        WHERE lf.factura_id = @FacturaId";
+                    using (var cmd = new MySqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.AddWithValue("@FacturaId", facturaId);
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            lineasFactura.Add(new LineaFactura
+                            while (reader.Read())
                             {
-                                Id = reader.GetInt32("id"),
-                                FacturaId = reader.GetInt32("factura_id"),
-                                ProductoId = reader.GetInt32("producto_id"),
-                                Cantidad = reader.GetInt32("cantidad"),
-                                PrecioUnitario = reader.GetDecimal("precio_unitario"),
-                                Producto = new Producto
+                                lineasFactura.Add(new LineaFactura
                                 {
-                                    Id = reader.GetInt32("producto_id"),
-                                    NombreProducto = reader.GetString("nombre_producto"),
-                                    CategoriaNombre = reader.GetString("categoria_nombre"),
-                                    Descripcion = reader.GetString("descripcion"),
-                                    Precio = reader.GetDouble("precio")
-                                }
-                            });
+                                    Id = reader.GetInt32("id"),
+                                    FacturaId = reader.GetInt32("factura_id"),
+                                    ProductoId = reader.GetInt32("producto_id"),
+                                    Cantidad = reader.GetInt32("cantidad"),
+                                    PrecioUnitario = reader.GetDecimal("precio_unitario"),
+                                    Producto = new Producto
+                                    {
+                                        Id = reader.GetInt32("producto_id"),
+                                        NombreProducto = reader.GetString("nombre_producto"),
+                                        CategoriaNombre = reader.GetString("categoria_nombre"),
+                                        Descripcion = reader.GetString("descripcion"),
+                                        Precio = reader.GetDouble("precio")
+                                    }
+                                });
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                throw new Exception($"Error retrieving lineas factura: {ex.Message}");
             }
 
             return lineasFactura;
