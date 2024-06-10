@@ -34,7 +34,7 @@ namespace StoneProtocol.NVVM.ViewModel
         {
             VM1 = new ViewModel1();
             CurrentView = new VistaLogin(); 
-            text = "Hola";
+    
 
             ShowHomeViewCommand = new RelayCommand(_ => ShowHomeView());
             ShowProductsViewCommand = new RelayCommand(_ => ShowProductsView());

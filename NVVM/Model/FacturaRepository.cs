@@ -23,8 +23,8 @@ namespace StoneProtocol.NVVM.Model
                 {
                     connection.Open();
                     string query = @"
-                        SELECT f.id, f.fecha, f.usuario_id
-                        FROM facturas f";
+                SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado
+                FROM facturas f";
                     using (var cmd = new MySqlCommand(query, connection))
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -35,6 +35,8 @@ namespace StoneProtocol.NVVM.Model
                                 Id = reader.GetInt32("id"),
                                 Fecha = reader.GetDateTime("fecha"),
                                 UsuarioId = reader.GetInt32("usuario_id"),
+                                Confirmado = reader.GetBoolean("confirmado"),
+                                Enviado = reader.GetBoolean("enviado"),
                                 LineasFactura = new List<LineaFactura>()
                             });
                         }
@@ -54,7 +56,6 @@ namespace StoneProtocol.NVVM.Model
 
             return facturas;
         }
-
         private List<LineaFactura> GetLineasFacturaByFacturaId(int facturaId)
         {
             var lineasFactura = new List<LineaFactura>();

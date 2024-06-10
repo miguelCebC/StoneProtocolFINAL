@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -61,5 +62,24 @@
                 </Grid>
             </ScrollViewer>
         </Border>
+
+        <Button Content="Mostrar/Ocultar Detalles" Grid.Row="5" Grid.Column="0" Click="ToggleDetailsVisibility_Click" Width="200" Height="30" Margin="10,20,0,20" Background="#5bc3ff" Foreground="White"/>
+
+        <StackPanel x:Name="DetailsPanel" Grid.Row="6" Grid.Column="0" Visibility="Collapsed">
+            <TextBlock Text="Detalles de Factura"
+                       Foreground="White"
+                       FontSize="36"
+                       Margin="10,20,0,20"/>
+            <Border Background="#272537" Margin="0,0,0,20" ClipToBounds="True">
+                <ScrollViewer x:Name="FacturasScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                              PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown"
+                              PreviewMouseMove="ScrollViewer_PreviewMouseMove"
+                              PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp">
+                    <WrapPanel x:Name="LineasFacturaWrapPanel">
+                        <!-- Aquí se agregarán dinámicamente las filas con los controles ProductDisplay -->
+                    </WrapPanel>
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

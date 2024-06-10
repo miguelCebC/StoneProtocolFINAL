@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +12,8 @@ namespace StoneProtocol.NVVM.View
     {
         private FacturaRepository _facturaRepository;
         private Factura _selectedFactura;
+        private static readonly Random Random = new Random();
+        private readonly Dictionary<string, ImageSource> _imageCache = new Dictionary<string, ImageSource>();
 
         public VistaFactura()
         {
@@ -21,7 +21,7 @@ namespace StoneProtocol.NVVM.View
             try
             {
                 _facturaRepository = new FacturaRepository();
-                LoadFacturas();
+                LoadFacturasAsync();
             }
             catch (Exception ex)
             {
@@ -29,11 +29,12 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private void LoadFacturas()
+        private async void LoadFacturasAsync()
         {
             try
             {
-                FacturasDataGrid.ItemsSource = _facturaRepository.GetAllFacturas();
+                var facturas = await Task.Run(() => _facturaRepository.GetAllFacturas());
+                FacturasDataGrid.ItemsSource = facturas;
             }
             catch (Exception ex)
             {
@@ -66,7 +67,7 @@ namespace StoneProtocol.NVVM.View
                     Descripcion = lineaFactura.Producto.Descripcion,
                 };
 
-                var productDisplay = new ProductDisplay
+                var productDisplay = new ProductDisplay()
                 {
                     DataContext = viewModel,
                     Margin = new Thickness(20, 0, 40, 0),
@@ -78,12 +79,12 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var fecha = SearchDateDatePicker.SelectedDate;
-                var facturas = _facturaRepository.GetAllFacturas();
+                var facturas = await Task.Run(() => _facturaRepository.GetAllFacturas());
                 if (fecha.HasValue)
                 {
                     facturas = facturas.Where(f => f.Fecha.Date == fecha.Value.Date).ToList();
@@ -98,23 +99,61 @@ namespace StoneProtocol.NVVM.View
 
         private LinearGradientBrush GetRandomGradient()
         {
-            Random rand = new Random();
-            Color color1 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
-            Color color2 = Color.FromRgb((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
+            Color color1 = Color.FromRgb((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
+            Color color2 = Color.FromRgb((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
             return new LinearGradientBrush(color1, color2, 45);
         }
 
-        private static ImageSource GetImageSourceByCategory(string category)
+        private ImageSource GetImageSourceByCategory(string category)
         {
-            string imagePath = category switch
+            if (!_imageCache.TryGetValue(category, out var imageSource))
             {
-                "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
-                "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
-                "Tablets" => "pack://application:,,,/Imagenes/tablet.png",
-                "Accessories" => "pack://application:,,,/Imagenes/acc.png",
-                _ => "pack://application:,,,/Imagenes/3.png",
+                string imagePath = category switch
+                {
+                    "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
+                    "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
+                    "Tablets" => "pack://application:,,,/Imagenes/tablet.png",
+                    "Accessories" => "pack://application:,,,/Imagenes/acc.png",
+                    _ => "pack://application:,,,/Imagenes/3.png",
+                };
+                imageSource = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                _imageCache[category] = imageSource;
+            }
+
+            return imageSource;
+        }
+
+        private void OnAddProductButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (_selectedFactura != null)
+            {
+                Producto producto = ObtenerProductoSeleccionado(); // Implementa este método según tus necesidades
+
+                var productWindow = new ProductWindow();
+                productWindow.ShowDialog();
+
+                // Actualiza la vista de las líneas de factura después de añadir un producto
+                PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
+            }
+            else
+            {
+                MessageBox.Show("Selecciona una factura primero.");
+            }
+        }
+
+        private Producto ObtenerProductoSeleccionado()
+        {
+            // Simulación de selección de producto
+            return new Producto
+            {
+                Id = 1,
+                NombreProducto = "Producto de Ejemplo",
+                CategoriaId = 1,
+                CategoriaNombre = "Categoría de Ejemplo",
+                ImageSource = "pack://application:,,,/Imagenes/ejemplo.png",
+                Descripcion = "Descripción de ejemplo",
+                Precio = 100.0
             };
-            return new BitmapImage(new Uri(imagePath, UriKind.Absolute));
         }
     }
 }

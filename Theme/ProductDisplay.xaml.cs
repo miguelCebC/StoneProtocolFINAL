@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using StoneProtocol.NVVM.Model;
 
 namespace StoneProtocol.Theme
 {
@@ -82,9 +83,9 @@ namespace StoneProtocol.Theme
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
         {
-            var productWindow = new StoneProtocol.ProductWindow
+            var productWindow = new StoneProtocol.ProductWindow()
             {
-                DataContext = this.DataContext
+                DataContext = DataContext,
             };
             productWindow.ShowDialog();
         }

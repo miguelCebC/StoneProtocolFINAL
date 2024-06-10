@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ namespace StoneProtocol.NVVM.View
         private ScrollViewer _scrollViewer;
         private DispatcherTimer _dragTimer;
         private ProductoRepository _productoRepository;
+        private Factura _selectedFactura;
 
         public VistaPrincipal()
         {
@@ -64,7 +66,7 @@ namespace StoneProtocol.NVVM.View
                     Descripcion = producto.Descripcion,
                 };
 
-                var productDisplay1 = new ProductDisplay
+                var productDisplay1 = new ProductDisplay()
                 {
                     DataContext = viewModel,
                     Margin = new Thickness(20, 0, 40, 0),
@@ -109,7 +111,7 @@ namespace StoneProtocol.NVVM.View
                     ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
                 };
 
-                var productDisplay = new ProductDisplay
+                var productDisplay = new ProductDisplay()
                 {
                     DataContext = viewModel,
                     Margin = new Thickness(20, 0, 40, 0),
@@ -137,7 +139,6 @@ namespace StoneProtocol.NVVM.View
         {
             string nombre = SearchNameTextBox.Text;
             string categoria = FilterCategoryComboBox.SelectedItem as string;
-            
 
             var productos = _productoRepository.SearchProductos(nombre, categoria);
             PopulateProductDisplays(productos);
@@ -146,7 +147,7 @@ namespace StoneProtocol.NVVM.View
         private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is Button)
-                return; // Ignore the event if it comes from a button
+                return; 
 
             if (sender is ScrollViewer scrollViewer)
             {
@@ -222,7 +223,16 @@ namespace StoneProtocol.NVVM.View
 
         private void SearchNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            string nombre = SearchNameTextBox.Text;
+            string categoria = FilterCategoryComboBox.SelectedItem as string;
 
+            var productos = _productoRepository.SearchProductos(nombre, categoria);
+            PopulateProductDisplays(productos);
+        }
+
+        private void ToggleDetailsVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            DetailsPanel.Visibility = DetailsPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }
