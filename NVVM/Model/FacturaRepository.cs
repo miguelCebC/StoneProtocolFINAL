@@ -56,6 +56,7 @@ namespace StoneProtocol.NVVM.Model
 
             return facturas;
         }
+
         private List<LineaFactura> GetLineasFacturaByFacturaId(int facturaId)
         {
             var lineasFactura = new List<LineaFactura>();
@@ -107,6 +108,51 @@ namespace StoneProtocol.NVVM.Model
             }
 
             return lineasFactura;
+        }
+
+        public Factura GetFirstUnconfirmedFacturaByUserId(int userId)
+        {
+            Factura factura = null;
+
+            try
+            {
+                using (var connection = database.GetConnection())
+                {
+                    connection.Open();
+                    string query = @"
+                        SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado
+                        FROM facturas f
+                        WHERE f.usuario_id = @UsuarioId AND f.confirmado = 0
+                        ORDER BY f.fecha ASC
+                        LIMIT 1";
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@UsuarioId", userId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                factura = new Factura
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Fecha = reader.GetDateTime("fecha"),
+                                    UsuarioId = reader.GetInt32("usuario_id"),
+                                    Confirmado = reader.GetBoolean("confirmado"),
+                                    Enviado = reader.GetBoolean("enviado"),
+                                    LineasFactura = GetLineasFacturaByFacturaId(reader.GetInt32("id"))
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                throw new Exception($"Error retrieving first unconfirmed factura: {ex.Message}");
+            }
+
+            return factura;
         }
     }
 }

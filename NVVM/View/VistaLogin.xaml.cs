@@ -8,11 +8,13 @@ namespace StoneProtocol.NVVM.View
     public partial class VistaLogin : UserControl
     {
         private readonly UsuarioRepository _usuarioRepository;
+        private readonly FacturaRepository _facturaRepository;
 
         public VistaLogin()
         {
             InitializeComponent();
             _usuarioRepository = new UsuarioRepository();
+            _facturaRepository = new FacturaRepository();
         }
 
         private void BotonIniciarSesion_Click(object sender, RoutedEventArgs e)
@@ -20,7 +22,6 @@ namespace StoneProtocol.NVVM.View
             string nombreUsuario = NombreTextBox.Text.Trim();
             string contrasena = ContrasenaBox.Password;
 
-            // Depuración: Verificar el valor del campo de texto
             // Verificar que el nombre de usuario y la contraseña no estén vacíos
             if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasena))
             {
@@ -33,6 +34,15 @@ namespace StoneProtocol.NVVM.View
 
             if (usuario != null)
             {
+                AppState.UserId = usuario.Id; // Guardar el ID del usuario en el estado de la aplicación
+
+                // Obtener la primera factura no confirmada del usuario
+                var factura = _facturaRepository.GetFirstUnconfirmedFacturaByUserId(usuario.Id);
+                if (factura != null)
+                {
+                    AppState.FacturaId = factura.Id; // Guardar el ID de la factura en el estado de la aplicación
+                }
+
                 ((MainWindow)Application.Current.MainWindow).HandleLogin(usuario);
             }
             else
@@ -46,9 +56,7 @@ namespace StoneProtocol.NVVM.View
             string nombre = NombreTextBox.Text.Trim();
             string contrasena = ContrasenaBox.Password;
 
-            // Depuración: Verificar el valor del campo de texto
-            MessageBox.Show($"Valor ingresado para registro: '{nombre}'");
-
+            // Verificar el valor del campo de texto
             if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(contrasena))
             {
                 MessageBox.Show("El nombre de usuario y la contraseña no pueden estar vacíos.");
@@ -65,7 +73,7 @@ namespace StoneProtocol.NVVM.View
             _usuarioRepository.CreateUsuario(usuario);
             MessageBox.Show("Usuario registrado exitosamente");
 
-            // Depuración: Leer los usuarios nuevamente para verificar el registro
+            // Leer los usuarios nuevamente para verificar el registro
             var usuarios = _usuarioRepository.ReadUsuarios();
             string debugMessage = "Usuarios leídos de la base de datos después del registro:\n";
             foreach (var user in usuarios)
