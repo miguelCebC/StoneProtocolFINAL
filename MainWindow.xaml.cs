@@ -1,11 +1,9 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using StoneProtocol.NVVM.Model;
 using StoneProtocol.NVVM.ViewModel;
-using StoneProtocol.Theme;
 namespace StoneProtocol
 {
     /// <summary>

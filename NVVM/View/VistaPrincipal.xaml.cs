@@ -104,6 +104,7 @@ namespace StoneProtocol.NVVM.View
                 var producto = shuffledProductos[i];
                 var viewModel = new ProductoDisplay
                 {
+                    Id = producto.Id,
                     NombreProducto = producto.NombreProducto,
                     CategoriaNombre = producto.CategoriaNombre,
                     Precio = producto.Precio,
