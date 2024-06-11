@@ -14,7 +14,32 @@ namespace StoneProtocol.NVVM.Model
         }
 
 
-
+        public void CreateFactura(Factura factura)
+        {
+            try
+            {
+                using (var connection = database.GetConnection())
+                {
+                    connection.Open();
+                    string query = @"
+                        INSERT INTO facturas (fecha, usuario_id, confirmado, enviado)
+                        VALUES (@Fecha, @UsuarioId, @Confirmado, @Enviado)";
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                        cmd.Parameters.AddWithValue("@UsuarioId", factura.UsuarioId);
+                        cmd.Parameters.AddWithValue("@Confirmado", factura.Confirmado);
+                        cmd.Parameters.AddWithValue("@Enviado", factura.Enviado);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                throw new Exception($"Error creating factura: {ex.Message}");
+            }
+        }
         public Factura GetFirstUnconfirmedFacturaByUserId(int userId)
         {
             Factura factura = null;

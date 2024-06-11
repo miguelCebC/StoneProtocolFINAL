@@ -94,7 +94,14 @@
              Style="{StaticResource MenuButton}"
              Command="{Binding PedidosCommand}"
              Visibility="Collapsed"/>
-
+                <RadioButton 
+                    x:Name="btnCesta" Content="Cesta"
+             Height="50"
+             Foreground="White"
+             FontSize="14"
+             Style="{StaticResource MenuButton}"
+             Command="{Binding CestaCommand}"
+                             Visibility="Collapsed"/>
                 <RadioButton Content="Salir"
                              Height="50"
                              Foreground="White"

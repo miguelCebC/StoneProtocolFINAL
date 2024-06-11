@@ -103,8 +103,11 @@ namespace StoneProtocol
             else
             {
                 btnHome.Visibility = Visibility.Visible;
+                btnCesta.Visibility = Visibility.Visible;
+
                 btnProductos.Visibility = Visibility.Hidden;
                 btnTienda.Visibility = Visibility.Hidden;
+
                 btnPepe.Visibility = Visibility.Hidden;
             }
             InvokeHomeCommand();

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using StoneProtocol.NVVM.Model;
 using StoneProtocol.Theme;
 
@@ -30,6 +30,7 @@ namespace StoneProtocol.NVVM.View
             {
                 MessageBox.Show($"Error initializing VistaCesta: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private async void LoadFacturasAsync()
@@ -118,6 +119,20 @@ namespace StoneProtocol.NVVM.View
                     _selectedFactura.Confirmado = true;
                     await Task.Run(() => _facturaRepository.UpdateFactura(_selectedFactura));
                     MessageBox.Show("Factura confirmada exitosamente.");
+
+                    // Crear una nueva factura vacía para el mismo usuario
+                    var nuevaFactura = new Factura
+                    {
+                        Fecha = DateTime.Now,
+                        UsuarioId = _selectedFactura.UsuarioId,
+                        Confirmado = false,
+                        Enviado = false,
+                        LineasFactura = new List<LineaFactura>()
+                    };
+                    await Task.Run(() => _facturaRepository.CreateFactura(nuevaFactura));
+                    MessageBox.Show("Nueva factura vacía creada exitosamente.");
+
+                    // Recargar las facturas
                     LoadFacturasAsync();
                 }
                 catch (Exception ex)
@@ -130,5 +145,7 @@ namespace StoneProtocol.NVVM.View
                 MessageBox.Show("Selecciona una factura primero.");
             }
         }
+
+
     }
 }
