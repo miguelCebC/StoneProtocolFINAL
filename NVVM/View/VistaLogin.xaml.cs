@@ -7,54 +7,51 @@ namespace StoneProtocol.NVVM.View
 {
     public partial class VistaLogin : UserControl
     {
-        private readonly UsuarioRepository usuarioRepository;
+        private readonly UsuarioRepository _usuarioRepository;
 
         public VistaLogin()
         {
             InitializeComponent();
-            usuarioRepository = new UsuarioRepository();
+            _usuarioRepository = new UsuarioRepository();
         }
 
         private void BotonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
             string nombreUsuario = NombreTextBox.Text.Trim();
+            string contrasena = ContrasenaBox.Password;
 
             // Depuración: Verificar el valor del campo de texto
-    
-
-            // Verificar que el nombre de usuario no está vacío
-            if (string.IsNullOrEmpty(nombreUsuario))
+            // Verificar que el nombre de usuario y la contraseña no estén vacíos
+            if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasena))
             {
-                MessageBox.Show("El nombre de usuario no puede estar vacío.");
+                MessageBox.Show("El nombre de usuario y la contraseña no pueden estar vacíos.");
                 return;
             }
 
-            var usuarios = usuarioRepository.ReadUsuarios();
-           
-            var usuario = usuarios.FirstOrDefault(u => u.Nombre.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase));
+            var usuarios = _usuarioRepository.ReadUsuarios();
+            var usuario = usuarios.FirstOrDefault(u => u.Nombre.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase) && u.Contrasena.Equals(contrasena));
 
             if (usuario != null)
             {
-               
                 ((MainWindow)Application.Current.MainWindow).HandleLogin(usuario);
             }
             else
             {
-                MessageBox.Show("Nombre de usuario incorrecto");
+                MessageBox.Show("Nombre de usuario o contraseña incorrectos.");
             }
         }
 
         private void BotonRegistrar_Click(object sender, RoutedEventArgs e)
         {
             string nombre = NombreTextBox.Text.Trim();
-            
+            string contrasena = ContrasenaBox.Password;
 
             // Depuración: Verificar el valor del campo de texto
             MessageBox.Show($"Valor ingresado para registro: '{nombre}'");
 
-            if (string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(contrasena))
             {
-                MessageBox.Show("El nombre de usuario no puede estar vacío.");
+                MessageBox.Show("El nombre de usuario y la contraseña no pueden estar vacíos.");
                 return;
             }
 
@@ -62,14 +59,14 @@ namespace StoneProtocol.NVVM.View
             {
                 Nombre = nombre,
                 Email = "", // Email vacío ya que no se utiliza
-              
+                Contrasena = contrasena
             };
 
-            usuarioRepository.CreateUsuario(usuario);
+            _usuarioRepository.CreateUsuario(usuario);
             MessageBox.Show("Usuario registrado exitosamente");
 
             // Depuración: Leer los usuarios nuevamente para verificar el registro
-            var usuarios = usuarioRepository.ReadUsuarios();
+            var usuarios = _usuarioRepository.ReadUsuarios();
             string debugMessage = "Usuarios leídos de la base de datos después del registro:\n";
             foreach (var user in usuarios)
             {
@@ -86,6 +83,5 @@ namespace StoneProtocol.NVVM.View
                 passwordBox.Tag = passwordBox.Password;
             }
         }
-
     }
 }

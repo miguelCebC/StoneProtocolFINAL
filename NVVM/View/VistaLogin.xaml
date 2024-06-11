@@ -18,15 +18,14 @@
         <!-- Panel de login centrado -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="644">
             <TextBlock Text="Stone Protocol"
-           
-VerticalAlignment="Center"
-HorizontalAlignment="Center"
-Foreground="White"
-FontSize="28"
-Margin="0,0,0,20" FontWeight="Bold"/>
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="28"
+                       Margin="0,0,0,20" FontWeight="Bold"/>
 
             <Image Source="\Imagenes\stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
-            
+
             <TextBlock Text="Iniciar Sesión"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -34,20 +33,20 @@ Margin="0,0,0,20" FontWeight="Bold"/>
                        FontSize="22"
                        Margin="0,10,0,20"/>
             <TextBlock Text="Email o usuario"
-           VerticalAlignment="Center"
-           HorizontalAlignment="Center"
-           Foreground="White"
-           FontSize="18"
-           Margin="0,0,0,0" />
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="18"
+                       Margin="0,0,0,0" />
 
             <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
             <TextBlock Text="Contraseña"
- VerticalAlignment="Center"
- HorizontalAlignment="Center"
- Foreground="White"
- FontSize="18"
- Margin="0,0,0,0"/>
-            <PasswordBox Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="18"
+                       Margin="0,0,0,0"/>
+            <PasswordBox Name="ContrasenaBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5" PasswordChanged="ContrasenaBox_PasswordChanged"/>
 
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
