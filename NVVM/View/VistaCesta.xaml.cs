@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using StoneProtocol.NVVM.Model;
 using StoneProtocol.Theme;
 
@@ -17,6 +19,10 @@ namespace StoneProtocol.NVVM.View
         private Factura _selectedFactura;
         private static readonly Random Random = new Random();
         private readonly Dictionary<string, ImageSource> _imageCache = new Dictionary<string, ImageSource>();
+        private Point _startPoint;
+        private bool _isDragging;
+        private ScrollViewer _scrollViewer;
+        private DispatcherTimer _dragTimer;
 
         public VistaCesta()
         {
@@ -25,12 +31,17 @@ namespace StoneProtocol.NVVM.View
             {
                 _facturaRepository = new FacturaRepository();
                 LoadFacturasAsync();
+
+                _dragTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(0.25)
+                };
+                _dragTimer.Tick += DragTimer_Tick;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error initializing VistaCesta: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private async void LoadFacturasAsync()
@@ -146,6 +157,60 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
+        private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is Button)
+                return;
 
+            if (sender is ScrollViewer scrollViewer)
+            {
+                _scrollViewer = scrollViewer;
+                _startPoint = e.GetPosition(scrollViewer);
+                _dragTimer.Start();
+            }
+        }
+
+        private void ScrollViewer_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isDragging && _scrollViewer != null)
+            {
+                var currentPoint = e.GetPosition(_scrollViewer);
+                var offsetX = _startPoint.X - currentPoint.X;
+                var offsetY = _startPoint.Y - currentPoint.Y;
+
+                if (_scrollViewer.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled)
+                {
+                    _scrollViewer.ScrollToHorizontalOffset(_scrollViewer.HorizontalOffset + offsetX);
+                }
+
+                if (_scrollViewer.VerticalScrollBarVisibility != ScrollBarVisibility.Disabled)
+                {
+                    _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset + offsetY);
+                }
+
+                _startPoint = currentPoint;
+            }
+        }
+
+        private void ScrollViewer_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _dragTimer.Stop();
+            _isDragging = false;
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.ReleaseMouseCapture();
+                _scrollViewer = null;
+            }
+        }
+
+        private void DragTimer_Tick(object sender, EventArgs e)
+        {
+            _dragTimer.Stop();
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.CaptureMouse();
+                _isDragging = true;
+            }
+        }
     }
 }
