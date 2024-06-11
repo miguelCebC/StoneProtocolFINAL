@@ -1,6 +1,10 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using StoneProtocol.NVVM.Model;
@@ -34,7 +38,8 @@ namespace StoneProtocol.NVVM.View
             try
             {
                 var facturas = await Task.Run(() => _facturaRepository.GetAllFacturas());
-                FacturasDataGrid.ItemsSource = facturas;
+                var filteredFacturas = facturas.Where(f => f.Confirmado && !f.Enviado).ToList();
+                FacturasDataGrid.ItemsSource = filteredFacturas;
             }
             catch (Exception ex)
             {
@@ -48,6 +53,7 @@ namespace StoneProtocol.NVVM.View
             {
                 _selectedFactura = selectedFactura;
                 PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
+                CalculateTotal();
             }
         }
 
@@ -79,21 +85,12 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private async void SearchButton_Click(object sender, RoutedEventArgs e)
+        private void CalculateTotal()
         {
-            try
+            if (_selectedFactura != null)
             {
-                var fecha = SearchDateDatePicker.SelectedDate;
-                var facturas = await Task.Run(() => _facturaRepository.GetAllFacturas());
-                if (fecha.HasValue)
-                {
-                    facturas = facturas.Where(f => f.Fecha.Date == fecha.Value.Date).ToList();
-                }
-                FacturasDataGrid.ItemsSource = facturas;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error searching facturas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                decimal total = _selectedFactura.LineasFactura.Sum(lf => (decimal)(lf.Producto.Precio * lf.Cantidad));
+                TotalTextBlock.Text = $"Total: ${total:F2}";
             }
         }
 
@@ -123,37 +120,28 @@ namespace StoneProtocol.NVVM.View
             return imageSource;
         }
 
-        private void OnAddProductButtonClick(object sender, RoutedEventArgs e)
+        private async void MarcarComoEnviadoButton_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedFactura != null)
             {
-                Producto producto = ObtenerProductoSeleccionado(); // Implementa este método según tus necesidades
+                try
+                {
+                    _selectedFactura.Enviado = true;
+                    await Task.Run(() => _facturaRepository.UpdateFactura(_selectedFactura));
+                    MessageBox.Show("Factura marcada como enviada exitosamente.");
 
-                var productWindow = new ProductWindow();
-                productWindow.ShowDialog();
-
-                // Actualiza la vista de las líneas de factura después de añadir un producto
-                PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
+                    // Recargar las facturas
+                    LoadFacturasAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error marcando la factura como enviada: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
                 MessageBox.Show("Selecciona una factura primero.");
             }
-        }
-
-        private Producto ObtenerProductoSeleccionado()
-        {
-            // Simulación de selección de producto
-            return new Producto
-            {
-                Id = 1,
-                NombreProducto = "Producto de Ejemplo",
-                CategoriaId = 1,
-                CategoriaNombre = "Categoría de Ejemplo",
-                ImageSource = "pack://application:,,,/Imagenes/ejemplo.png",
-                Descripcion = "Descripción de ejemplo",
-                Precio = 100.0
-            };
         }
     }
 }

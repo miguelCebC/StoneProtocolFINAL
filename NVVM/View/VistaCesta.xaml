@@ -17,16 +17,6 @@
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Margin" Value="10,20,0,0"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="0,10,0,0"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin" Value="0,10,0,0"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
     </UserControl.Resources>
     <Border Background="#272537" Padding="20" CornerRadius="10">
         <StackPanel>
@@ -47,7 +37,7 @@
             <TextBox x:Name="DireccionTextBox" />
 
             <!-- ComboBox para el método de pago -->
-            <ComboBox x:Name="MetodoPagoComboBox">
+            <ComboBox x:Name="MetodoPagoComboBox" Margin="0,10,0,0">
                 <ComboBoxItem Content="Contrareembolso"/>
             </ComboBox>
 

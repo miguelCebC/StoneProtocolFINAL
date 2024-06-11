@@ -134,6 +134,7 @@ namespace StoneProtocol.NVVM.View
                 try
                 {
                     _selectedFactura.Confirmado = true;
+                    _selectedFactura.Direccion = DireccionTextBox.Text; // Guardar la dirección
                     await Task.Run(() => _facturaRepository.UpdateFactura(_selectedFactura));
                     MessageBox.Show("Factura confirmada exitosamente.");
 
@@ -144,6 +145,7 @@ namespace StoneProtocol.NVVM.View
                         UsuarioId = _selectedFactura.UsuarioId,
                         Confirmado = false,
                         Enviado = false,
+                        Direccion = string.Empty, // Inicializar la dirección como vacío
                         LineasFactura = new List<LineaFactura>()
                     };
                     await Task.Run(() => _facturaRepository.CreateFactura(nuevaFactura));
