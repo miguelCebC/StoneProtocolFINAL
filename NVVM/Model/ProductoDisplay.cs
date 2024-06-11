@@ -5,6 +5,7 @@ namespace StoneProtocol.NVVM.Model
 {
     public class ProductoDisplay
     {
+        public int Id { get; set; }
         public string NombreProducto { get; set; }
         public string CategoriaNombre { get; set; }
         public Brush BackgroundGradient { get; set; }

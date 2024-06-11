@@ -83,7 +83,7 @@ namespace StoneProtocol.Theme
 
         private void OnBuyButtonClick(object sender, RoutedEventArgs e)
         {
-            var productWindow = new StoneProtocol.ProductWindow()
+            var productWindow = new ProductWindow()
             {
                 DataContext = DataContext,
             };

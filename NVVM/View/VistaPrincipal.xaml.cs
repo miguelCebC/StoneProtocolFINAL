@@ -58,6 +58,7 @@ namespace StoneProtocol.NVVM.View
             {
                 var viewModel = new ProductoDisplay
                 {
+                    Id = producto.Id,
                     NombreProducto = producto.NombreProducto,
                     CategoriaNombre = producto.CategoriaNombre,
                     BackgroundGradient = GetRandomGradient(),

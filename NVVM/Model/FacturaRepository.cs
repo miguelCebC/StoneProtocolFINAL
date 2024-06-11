@@ -154,5 +154,32 @@ namespace StoneProtocol.NVVM.Model
 
             return factura;
         }
+
+        public void AddLineaFactura(LineaFactura lineaFactura)
+        {
+            try
+            {
+                using (var connection = database.GetConnection())
+                {
+                    connection.Open();
+                    string query = @"
+                        INSERT INTO lineas_factura (factura_id, producto_id, cantidad, precio_unitario)
+                        VALUES (@FacturaId, @ProductoId, @Cantidad, @PrecioUnitario)";
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FacturaId", lineaFactura.FacturaId);
+                        cmd.Parameters.AddWithValue("@ProductoId", lineaFactura.ProductoId);
+                        cmd.Parameters.AddWithValue("@Cantidad", lineaFactura.Cantidad);
+                        cmd.Parameters.AddWithValue("@PrecioUnitario", lineaFactura.PrecioUnitario);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                throw new Exception($"Error adding linea factura: {ex.Message}");
+            }
+        }
     }
 }
