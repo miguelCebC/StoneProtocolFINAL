@@ -2,16 +2,25 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using StoneProtocol.NVVM.Model;
 
 namespace StoneProtocol.Theme
 {
     public partial class ProductDisplay : UserControl
     {
-        public ProductDisplay()
+        private bool BotonActivo;
+        public ProductDisplay(bool botonActivo)
         {
             InitializeComponent();
             DataContextChanged += OnDataContextChanged;
+            BotonActivo = botonActivo;
+            if (BotonActivo)
+            {
+                BuyButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BuyButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         public static readonly DependencyProperty NombreProductoProperty =

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -67,7 +64,7 @@ namespace StoneProtocol.NVVM.View
                     Descripcion = producto.Descripcion,
                 };
 
-                var productDisplay1 = new ProductDisplay()
+                var productDisplay1 = new ProductDisplay(true)
                 {
                     DataContext = viewModel,
                     Margin = new Thickness(20, 0, 40, 0),
@@ -113,7 +110,7 @@ namespace StoneProtocol.NVVM.View
                     ImageSource = GetImageSourceByCategory(producto.CategoriaNombre)
                 };
 
-                var productDisplay = new ProductDisplay()
+                var productDisplay = new ProductDisplay(true)
                 {
                     DataContext = viewModel,
                     Margin = new Thickness(20, 0, 40, 0),
