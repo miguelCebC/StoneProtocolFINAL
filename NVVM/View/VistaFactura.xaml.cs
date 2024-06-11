@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using StoneProtocol.NVVM.Model;
@@ -54,6 +53,7 @@ namespace StoneProtocol.NVVM.View
                 _selectedFactura = selectedFactura;
                 PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
                 CalculateTotal();
+                SetUsuarioYDireccion(_selectedFactura.UsuarioId, _selectedFactura.Direccion);
             }
         }
 
@@ -90,8 +90,19 @@ namespace StoneProtocol.NVVM.View
             if (_selectedFactura != null)
             {
                 decimal total = _selectedFactura.LineasFactura.Sum(lf => (decimal)(lf.Producto.Precio * lf.Cantidad));
-                TotalTextBlock.Text = $"Total: ${total:F2}";
+                TotalTextBlock.Text = $"Total: {total:F2}€";
             }
+        }
+
+        private void SetUsuarioYDireccion(int usuarioId, string direccion)
+        {
+            // Aquí debes obtener el nombre del usuario a partir de su ID
+            // Supongo que tienes un método GetUsuarioById en tu repositorio de usuarios
+            var usuarioRepository = new UsuarioRepository();
+            var usuario = usuarioRepository.GetUsuarioById(usuarioId);
+
+            UsuarioTextBlock.Text = $"Usuario: {usuario.Nombre}";
+            DireccionTextBlock.Text = $"Dirección: {direccion}";
         }
 
         private LinearGradientBrush GetRandomGradient()
@@ -143,5 +154,7 @@ namespace StoneProtocol.NVVM.View
                 MessageBox.Show("Selecciona una factura primero.");
             }
         }
+
+
     }
 }

@@ -32,8 +32,7 @@
             </DataGrid>
 
             <!-- ScrollViewer con las líneas del pedido -->
-            <ScrollViewer x:Name="ProductScrollViewer" 
-                          >
+            <ScrollViewer x:Name="ProductScrollViewer">
                 <WrapPanel x:Name="LineasFacturaWrapPanel" Margin="0,10,0,0">
                     <!-- Aquí se agregarán dinámicamente los controles ProductDisplay -->
                 </WrapPanel>
@@ -41,6 +40,8 @@
 
             <!-- Total de las líneas del pedido -->
             <TextBlock x:Name="TotalTextBlock" Text="Total: $" FontSize="18" FontWeight="Bold"/>
+            <TextBlock x:Name="UsuarioTextBlock" Text="Usuario: " FontSize="18" FontWeight="Bold"/>
+            <TextBlock x:Name="DireccionTextBlock" Text="Dirección: " FontSize="18" FontWeight="Bold"/>
 
             <!-- Botón para marcar la factura como enviada -->
             <Button Content="Marcar como enviado" Width="200" Click="MarcarComoEnviadoButton_Click" HorizontalAlignment="Center"/>

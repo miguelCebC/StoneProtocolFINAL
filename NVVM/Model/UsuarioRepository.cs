@@ -29,6 +29,8 @@ namespace StoneProtocol.NVVM.Model
             }
         }
 
+
+
         public List<Usuario> ReadUsuarios()
         {
             var usuarios = new List<Usuario>();
@@ -85,6 +87,33 @@ namespace StoneProtocol.NVVM.Model
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public Usuario GetUsuarioById(int usuarioId)
+        {
+            Usuario usuario = null;
+            using (var connection = _database.GetConnection())
+            {
+                connection.Open();
+                string query = "SELECT * FROM usuarios WHERE id = @Id";
+                using (var cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Id", usuarioId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            usuario = new Usuario
+                            {
+                                Id = reader.GetInt32("id"),
+                                Nombre = reader.GetString("nombre"),
+                                // Mapear otras propiedades según sea necesario
+                            };
+                        }
+                    }
+                }
+            }
+            return usuario;
         }
     }
 }
