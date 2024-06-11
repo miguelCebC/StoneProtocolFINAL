@@ -55,62 +55,84 @@
                        Grid.Column="0"
                       />
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <RadioButton 
-                         x:Name="btnHome"
-                         Content="Home"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowHomeViewCommand}"
-                    Visibility="Collapsed"
-                     />
+        x:Name="btnHome"
+        Content="Home"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding ShowHomeViewCommand}"
+        Visibility="Collapsed"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
 
                 <RadioButton 
-                         x:Name="btnProductos"
-                         Content="Productos"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowProductsViewCommand}"
-                     Visibility="Collapsed"/>
+        x:Name="btnProductos"
+        Content="Productos"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding ShowProductsViewCommand}"
+        Visibility="Collapsed"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
 
                 <RadioButton 
-                         x:Name="btnTienda"
-                         Content="Tienda"
-                         Height="50"
-                         Foreground="White"
-                         FontSize="14"
-                         Style="{StaticResource MenuButton}"
-                         Command="{Binding ShowStoreViewCommand}"
-                     Visibility="Collapsed"/>
-                <RadioButton x:Name="btnPepe"
-             Content="Pepe"
-             Height="50"
-             Foreground="White"
-             FontSize="14"
-             Style="{StaticResource MenuButton}"
-             Command="{Binding PedidosCommand}"
-             Visibility="Collapsed"/>
+        x:Name="btnTienda"
+        Content="Tienda"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding ShowStoreViewCommand}"
+        Visibility="Collapsed"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
+
                 <RadioButton 
-                    x:Name="btnCesta" Content="Cesta"
-             Height="50"
-             Foreground="White"
-             FontSize="14"
-             Style="{StaticResource MenuButton}"
-             Command="{Binding CestaCommand}"
-                             Visibility="Collapsed"/>
-                <RadioButton Content="Salir"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButton}"
-                             Command="{Binding CloseCommand}"/>
+        x:Name="btnPepe"
+        Content="Pepe"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding PedidosCommand}"
+        Visibility="Collapsed"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
 
+                <RadioButton 
+        x:Name="btnCesta"
+        Content="Cesta"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding CestaCommand}"
+        Visibility="Collapsed"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
 
+                <RadioButton 
+        Content="Salir"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding CloseCommand}"
+        HorizontalContentAlignment="Stretch"
+        VerticalAlignment="Top"
+    />
             </StackPanel>
+
 
             <ContentControl Grid.Row="1"
                             Grid.Column="1"

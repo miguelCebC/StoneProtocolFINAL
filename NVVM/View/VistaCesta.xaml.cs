@@ -30,7 +30,7 @@ namespace StoneProtocol.NVVM.View
             try
             {
                 _facturaRepository = new FacturaRepository();
-                LoadFacturasAsync();
+                LoadFirstFacturaAsync();
 
                 _dragTimer = new DispatcherTimer
                 {
@@ -44,26 +44,23 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
-        private async void LoadFacturasAsync()
+        private async void LoadFirstFacturaAsync()
         {
             try
             {
                 var facturas = await Task.Run(() => _facturaRepository.GetFacturasByUserId(AppState.UserId));
                 var unconfirmedFacturas = facturas.Where(f => !f.Confirmado).ToList();
-                FacturasDataGrid.ItemsSource = unconfirmedFacturas;
+
+                if (unconfirmedFacturas.Any())
+                {
+                    _selectedFactura = unconfirmedFacturas.First();
+                    PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
+                    CalculateTotal();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading facturas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void FacturasDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FacturasDataGrid.SelectedItem is Factura selectedFactura)
-            {
-                _selectedFactura = selectedFactura;
-                PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
             }
         }
 
@@ -95,6 +92,15 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
+        private void CalculateTotal()
+        {
+            if (_selectedFactura != null)
+            {
+                decimal total = _selectedFactura.LineasFactura.Sum(lf => (decimal)(lf.Producto.Precio * lf.Cantidad));
+                TotalTextBlock.Text = $"Total: ${total:F2}";
+            }
+        }
+
         private LinearGradientBrush GetRandomGradient()
         {
             Color color1 = Color.FromRgb((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
@@ -123,7 +129,7 @@ namespace StoneProtocol.NVVM.View
 
         private async void ConfirmarFacturaButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedFactura != null)
+            if (_selectedFactura != null && !string.IsNullOrEmpty(DireccionTextBox.Text) && MetodoPagoComboBox.SelectedItem != null)
             {
                 try
                 {
@@ -144,7 +150,7 @@ namespace StoneProtocol.NVVM.View
                     MessageBox.Show("Nueva factura vacía creada exitosamente.");
 
                     // Recargar las facturas
-                    LoadFacturasAsync();
+                    LoadFirstFacturaAsync();
                 }
                 catch (Exception ex)
                 {
@@ -153,7 +159,7 @@ namespace StoneProtocol.NVVM.View
             }
             else
             {
-                MessageBox.Show("Selecciona una factura primero.");
+                MessageBox.Show("Por favor, rellena todos los campos requeridos.");
             }
         }
 
