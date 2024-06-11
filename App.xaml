@@ -12,6 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MenuButton.xaml"/>
                 <ResourceDictionary Source="Theme/TBoxPeersonalizado.xaml"/>
+                <ResourceDictionary Source="Theme/PBoxPerson.xaml"/>
 
 
             </ResourceDictionary.MergedDictionaries>

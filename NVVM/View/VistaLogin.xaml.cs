@@ -77,5 +77,15 @@ namespace StoneProtocol.NVVM.View
             }
             MessageBox.Show(debugMessage);
         }
+
+        private void ContrasenaBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = sender as PasswordBox;
+            if (passwordBox != null)
+            {
+                passwordBox.Tag = passwordBox.Password;
+            }
+        }
+
     }
 }
