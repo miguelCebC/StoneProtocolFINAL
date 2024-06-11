@@ -205,13 +205,14 @@ namespace StoneProtocol.NVVM.Model
                 {
                     connection.Open();
                     string query = @"
-                        UPDATE facturas 
-                        SET confirmado = @Confirmado, enviado = @Enviado
-                        WHERE id = @Id";
+                UPDATE facturas 
+                SET confirmado = @Confirmado, enviado = @Enviado, direccion = @Direccion
+                WHERE id = @Id";
                     using (var cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@Confirmado", factura.Confirmado);
                         cmd.Parameters.AddWithValue("@Enviado", factura.Enviado);
+                        cmd.Parameters.AddWithValue("@Direccion", factura.Direccion); // Añadir dirección
                         cmd.Parameters.AddWithValue("@Id", factura.Id);
                         cmd.ExecuteNonQuery();
                     }
@@ -223,6 +224,7 @@ namespace StoneProtocol.NVVM.Model
                 throw new Exception($"Error updating factura: {ex.Message}");
             }
         }
+
 
         private List<LineaFactura> GetLineasFacturaByFacturaId(int facturaId)
         {

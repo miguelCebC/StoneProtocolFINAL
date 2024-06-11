@@ -133,8 +133,12 @@ namespace StoneProtocol.NVVM.View
             {
                 try
                 {
+                    // Guardar la dirección antes de confirmar la factura
+                    _selectedFactura.Direccion = DireccionTextBox.Text;
+
+                    // Confirmar la factura
                     _selectedFactura.Confirmado = true;
-                    _selectedFactura.Direccion = DireccionTextBox.Text; // Guardar la dirección
+
                     await Task.Run(() => _facturaRepository.UpdateFactura(_selectedFactura));
                     MessageBox.Show("Factura confirmada exitosamente.");
 
@@ -164,6 +168,7 @@ namespace StoneProtocol.NVVM.View
                 MessageBox.Show("Por favor, rellena todos los campos requeridos.");
             }
         }
+
 
         private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
