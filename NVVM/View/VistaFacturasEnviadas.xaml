@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="StoneProtocol.NVVM.View.VistaFactura"
+﻿<UserControl x:Class="StoneProtocol.NVVM.View.VistaFacturasEnviadas"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,31 +20,24 @@
     </UserControl.Resources>
     <Border Background="#272537" Padding="20" CornerRadius="10">
         <StackPanel>
-            <!-- DataGrid para mostrar las facturas -->
             <DataGrid x:Name="FacturasDataGrid" AutoGenerateColumns="False" SelectionChanged="FacturasDataGrid_SelectionChanged" Margin="0,0,0,20">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
                     <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}" Width="*"/>
                     <DataGridTextColumn Header="Usuario ID" Binding="{Binding UsuarioId}" Width="*"/>
                     <DataGridTextColumn Header="Direccion" Binding="{Binding Direccion}" Width="*"/>
-                    <!-- Nueva columna para la dirección -->
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- ScrollViewer con las líneas del pedido -->
             <ScrollViewer x:Name="ProductScrollViewer" Visibility="Hidden">
                 <WrapPanel x:Name="LineasFacturaWrapPanel" Margin="0,10,0,0">
                     <!-- Aquí se agregarán dinámicamente los controles ProductDisplay -->
                 </WrapPanel>
             </ScrollViewer>
 
-            <!-- Total de las líneas del pedido -->
             <TextBlock x:Name="TotalTextBlock" Text="Total: $" FontSize="18" FontWeight="Bold"/>
             <TextBlock x:Name="UsuarioTextBlock" Text="Usuario: " FontSize="18" FontWeight="Bold"/>
             <TextBlock x:Name="DireccionTextBlock" Text="Dirección: " FontSize="18" FontWeight="Bold"/>
-
-            <!-- Botón para marcar la factura como enviada -->
-            <Button Content="Marcar como enviado" Width="200" Click="MarcarComoEnviadoButton_Click" HorizontalAlignment="Center"/>
         </StackPanel>
     </Border>
 </UserControl>

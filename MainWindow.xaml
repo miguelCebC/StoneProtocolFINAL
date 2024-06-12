@@ -78,20 +78,10 @@
         Visibility="Collapsed"
     />
 
-                <RadioButton 
-        x:Name="btnTienda"
-        Content="Tienda"
-        Height="50"
-        Foreground="White"
-        FontSize="14"
-        Style="{StaticResource MenuButton}"
-        Command="{Binding ShowStoreViewCommand}"
-        Visibility="Collapsed"
-    />
 
                 <RadioButton 
         x:Name="btnPepe"
-        Content="Pepe"
+        Content="Pedidos"
         Height="50"
         Foreground="White"
         FontSize="14"
@@ -108,6 +98,17 @@
         FontSize="14"
         Style="{StaticResource MenuButton}"
         Command="{Binding CestaCommand}"
+        Visibility="Collapsed"
+    />
+
+                <RadioButton 
+        x:Name="btnTienda"
+        Content="Facturas"
+        Height="50"
+        Foreground="White"
+        FontSize="14"
+        Style="{StaticResource MenuButton}"
+        Command="{Binding ShowStoreViewCommand}"
         Visibility="Collapsed"
     />
 

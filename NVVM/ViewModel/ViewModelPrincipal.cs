@@ -69,7 +69,7 @@ namespace StoneProtocol.NVVM.ViewModel
 
         public void ShowStoreView()
         {
-            CurrentView = new VistaLogin();
+            CurrentView = new VistaFacturasEnviadas();
         }
 
         public void ShowVistaPrincipal()

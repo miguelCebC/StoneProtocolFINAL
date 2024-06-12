@@ -229,9 +229,6 @@ namespace StoneProtocol.NVVM.View
             PopulateProductDisplays(productos);
         }
 
-        private void ToggleDetailsVisibility_Click(object sender, RoutedEventArgs e)
-        {
-            DetailsPanel.Visibility = DetailsPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        }
+        
     }
 }

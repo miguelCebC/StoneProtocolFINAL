@@ -63,7 +63,7 @@
             </ScrollViewer>
         </Border>
 
-        <Button Content="Mostrar/Ocultar Detalles" Grid.Row="5" Grid.Column="0" Click="ToggleDetailsVisibility_Click" Width="200" Height="30" Margin="10,20,0,20" Background="#5bc3ff" Foreground="White"/>
+       
 
         <StackPanel x:Name="DetailsPanel" Grid.Row="6" Grid.Column="0" Visibility="Collapsed">
             <TextBlock Text="Detalles de Factura"

@@ -94,7 +94,7 @@ namespace StoneProtocol
                 btnProductos.Visibility = Visibility.Visible;
                 btnPepe.Visibility = Visibility.Visible;
 
-                //btnTienda.Visibility = Visibility.Visible;
+                btnTienda.Visibility = Visibility.Visible;
                 //btnPepe.Visibility = Visibility.Visible;
 
             }
@@ -103,10 +103,10 @@ namespace StoneProtocol
                 btnHome.Visibility = Visibility.Visible;
                 btnCesta.Visibility = Visibility.Visible;
 
-                btnProductos.Visibility = Visibility.Hidden;
-                btnTienda.Visibility = Visibility.Hidden;
+                btnProductos.Visibility = Visibility.Collapsed;
+                btnTienda.Visibility = Visibility.Visible;
 
-                btnPepe.Visibility = Visibility.Hidden;
+                btnPepe.Visibility = Visibility.Collapsed;
             }
             InvokeHomeCommand();
 
