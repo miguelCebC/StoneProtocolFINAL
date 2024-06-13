@@ -17,15 +17,12 @@ namespace StoneProtocol.NVVM.View
         public VistaFactura()
         {
             InitializeComponent();
-            try
-            {
+           
+            
                 _facturaRepository = new FacturaRepository();
                 LoadFacturasAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error initializing VistaFactura: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+            
         }
 
         private async void LoadFacturasAsync()
