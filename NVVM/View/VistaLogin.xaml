@@ -15,44 +15,58 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <!-- Panel de login centrado -->
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="644">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Stone Protocol"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Foreground="White"
                        FontSize="28"
                        Margin="0,0,0,20" FontWeight="Bold"/>
-
-            <Image Source="\Imagenes\stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
-
-            <TextBlock Text="Iniciar Sesión"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Foreground="White"
-                       FontSize="22"
-                       Margin="0,10,0,20"/>
-            <TextBlock Text="Email o usuario"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Foreground="White"
-                       FontSize="18"
-                       Margin="0,0,0,0" />
-
-            <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
-            <TextBlock Text="Contraseña"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Foreground="White"
-                       FontSize="18"
-                       Margin="0,0,0,0"/>
-            <PasswordBox Name="ContrasenaBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5" PasswordChanged="ContrasenaBox_PasswordChanged"/>
-
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                <Button Name="BotonRegistrar" Content="Registrarse" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>
-                <Button Name="BotonIniciarSesion" Content="Iniciar Sesión" Width="114" Height="40" Margin="5" Click="BotonIniciarSesion_Click"/>
-            </StackPanel>
+            <Image Source="/Imagenes/stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
+            <TabControl Width="300" Background="#272537">
+                <TabItem Header="Iniciar Sesión">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Email o usuario"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   Margin="0,0,0,0" />
+                        <TextBox Name="NombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
+                        <TextBlock Text="Contraseña"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"/>
+                        <PasswordBox Name="ContrasenaBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5" PasswordChanged="ContrasenaBox_PasswordChanged"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                            <Button Name="BotonIniciarSesion" Content="Iniciar Sesión" Width="114" Height="40" Margin="5" Click="BotonIniciarSesion_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Registrar">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Nombre de Usuario"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   Margin="0,0,0,0" />
+                        <TextBox Name="RegistroNombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
+                        <TextBlock Text="Contraseña"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"/>
+                        <PasswordBox Name="RegistroContrasenaBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                            <Button Name="BotonRegistrar" Content="Registrar" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </StackPanel>
     </Grid>
 </UserControl>

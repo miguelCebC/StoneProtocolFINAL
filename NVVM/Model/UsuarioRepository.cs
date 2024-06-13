@@ -29,8 +29,6 @@ namespace StoneProtocol.NVVM.Model
             }
         }
 
-
-
         public List<Usuario> ReadUsuarios()
         {
             var usuarios = new List<Usuario>();

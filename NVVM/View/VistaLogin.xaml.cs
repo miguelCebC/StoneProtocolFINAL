@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using StoneProtocol.NVVM.Model;
+using System.Linq;
 
 namespace StoneProtocol.NVVM.View
 {
@@ -52,8 +53,8 @@ namespace StoneProtocol.NVVM.View
 
         private void BotonRegistrar_Click(object sender, RoutedEventArgs e)
         {
-            string nombre = NombreTextBox.Text.Trim();
-            string contrasena = ContrasenaBox.Password;
+            string nombre = RegistroNombreTextBox.Text.Trim();
+            string contrasena = RegistroContrasenaBox.Password;
 
             // Verificar el valor del campo de texto
             if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(contrasena))
