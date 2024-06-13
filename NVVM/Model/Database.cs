@@ -11,7 +11,7 @@ namespace StoneProtocol.NVVM.Model
         public Database()
         {
             //connectionString = "server=sql7.freemysqlhosting.net;database=sql7712035;user=sql7712035;password=8aGxfmHxFi;port=3306;";
-            connectionString = "server=localhost;database=stoneprotocol;user=root;password= ;port=3306;";
+            connectionString = "server=mysql-175544-0.cloudclusters.net;database=stoneprotocol;user=user;password=3nmNkxdK ;port=10058;";
         }
 
         public MySqlConnection GetConnection()
