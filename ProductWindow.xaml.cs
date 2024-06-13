@@ -11,9 +11,18 @@ namespace StoneProtocol
         {
             InitializeComponent();
             _facturaRepository = new FacturaRepository();
+            if(AppState.Admin)
+            {
+                BuyButton.Visibility = Visibility.Collapsed;
+            }
         }
 
-        private void OnBuyButtonClick(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BuyButton_Click(object sender, RoutedEventArgs e)
         {
             // Obtener el producto del DataContext
             var producto = DataContext as ProductoDisplay;
@@ -51,11 +60,6 @@ namespace StoneProtocol
             }
 
             // Cerrar la ventana
-            this.Close();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
             this.Close();
         }
     }

@@ -17,10 +17,8 @@ namespace StoneProtocol.Theme
             {
                 BuyButton.Visibility = Visibility.Visible;
             }
-            else
-            {
-                BuyButton.Visibility = Visibility.Collapsed;
-            }
+          
+           
         }
 
         public static readonly DependencyProperty NombreProductoProperty =

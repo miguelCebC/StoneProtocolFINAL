@@ -13,30 +13,23 @@ namespace StoneProtocol.NVVM.Model
             database = new Database();
         }
 
-        public void CreateFactura(Factura factura)
+        public int CreateFactura(Factura factura)
         {
-            try
+            using (var connection = database.GetConnection())
             {
-                using (var connection = database.GetConnection())
+                connection.Open();
+                string query = "INSERT INTO facturas (fecha, usuario_id, confirmado, enviado, direccion) VALUES (@Fecha, @UsuarioId, @Confirmado, @Enviado, @Direccion)";
+                using (var cmd = new MySqlCommand(query, connection))
                 {
-                    connection.Open();
-                    string query = @"
-                        INSERT INTO facturas (fecha, usuario_id, confirmado, enviado, direccion)
-                        VALUES (@Fecha, @UsuarioId, @Confirmado, @Enviado, @Direccion)";
-                    using (var cmd = new MySqlCommand(query, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
-                        cmd.Parameters.AddWithValue("@UsuarioId", factura.UsuarioId);
-                        cmd.Parameters.AddWithValue("@Confirmado", factura.Confirmado);
-                        cmd.Parameters.AddWithValue("@Enviado", factura.Enviado);
-                        cmd.Parameters.AddWithValue("@Direccion", factura.Direccion);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                    cmd.Parameters.AddWithValue("@UsuarioId", factura.UsuarioId);
+                    cmd.Parameters.AddWithValue("@Confirmado", factura.Confirmado);
+                    cmd.Parameters.AddWithValue("@Enviado", factura.Enviado);
+                    cmd.Parameters.AddWithValue("@Direccion", factura.Direccion);
+                    cmd.ExecuteNonQuery();
+
+                    return (int)cmd.LastInsertedId; // Retornar el ID de la nueva factura creada
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error creating factura: {ex.Message}");
             }
         }
 

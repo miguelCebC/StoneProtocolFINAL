@@ -35,12 +35,13 @@ namespace StoneProtocol.NVVM.View
             if (usuario != null)
             {
                 AppState.UserId = usuario.Id; // Guardar el ID del usuario en el estado de la aplicación
+                AppState.Admin = usuario.Admin; // Guardar el estado de administrador del usuario en el estado de la aplicación
 
                 // Obtener la primera factura no confirmada del usuario
                 var factura = _facturaRepository.GetFirstUnconfirmedFacturaByUserId(usuario.Id);
                 if (factura != null)
                 {
-                    AppState.FacturaId = factura.Id; // Guardar el ID de la factura en el estado de la aplicación
+                    AppState.FacturaId = factura.Id; 
                 }
 
                 ((MainWindow)Application.Current.MainWindow).HandleLogin(usuario);

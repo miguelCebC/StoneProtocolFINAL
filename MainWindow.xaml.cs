@@ -15,6 +15,7 @@ namespace StoneProtocol
         {
             InitializeComponent();
             this.SourceInitialized += new EventHandler(Window_SourceInitialized);
+
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)

@@ -150,8 +150,12 @@ namespace StoneProtocol.NVVM.View
                         Direccion = string.Empty, // Inicializar la dirección como vacío
                         LineasFactura = new List<LineaFactura>()
                     };
-                    await Task.Run(() => _facturaRepository.CreateFactura(nuevaFactura));
+
+                    int nuevaFacturaId = await Task.Run(() => _facturaRepository.CreateFactura(nuevaFactura));
                     MessageBox.Show("Nueva factura vacía creada exitosamente.");
+
+                    // Actualizar AppState con el ID de la nueva factura
+                    AppState.FacturaId = nuevaFacturaId;
 
                     // Recargar las facturas
                     LoadFirstFacturaAsync();
@@ -166,6 +170,7 @@ namespace StoneProtocol.NVVM.View
                 MessageBox.Show("Por favor, rellena todos los campos requeridos.");
             }
         }
+
 
         private async void VaciarCestaButton_Click(object sender, RoutedEventArgs e)
         {
