@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using StoneProtocol.NVVM.Model;
 
@@ -40,7 +42,7 @@ namespace StoneProtocol.NVVM.View
                 var factura = _facturaRepository.GetFirstUnconfirmedFacturaByUserId(usuario.Id);
                 if (factura != null)
                 {
-                    AppState.FacturaId = factura.Id; 
+                    AppState.FacturaId = factura.Id;
                 }
 
                 ((MainWindow)Application.Current.MainWindow).HandleLogin(usuario);
@@ -73,6 +75,22 @@ namespace StoneProtocol.NVVM.View
 
             _usuarioRepository.CreateUsuario(usuario);
             MessageBox.Show("Usuario registrado exitosamente");
+
+            // Obtener el ID del usuario recién creado
+            var nuevoUsuario = _usuarioRepository.ReadUsuarios().FirstOrDefault(u => u.Email == email);
+            if (nuevoUsuario != null)
+            {
+                // Crear una nueva factura para el nuevo usuario
+                var nuevaFactura = new Factura
+                {
+                    Fecha = DateTime.Now,
+                    UsuarioId = nuevoUsuario.Id,
+                    Confirmado = false,
+                    Enviado = false,
+                    Direccion = "" // Puedes ajustar esto según sea necesario
+                };
+                _facturaRepository.CreateFactura(nuevaFactura);
+            }
 
             // Leer los usuarios nuevamente para verificar el registro
             var usuarios = _usuarioRepository.ReadUsuarios();
