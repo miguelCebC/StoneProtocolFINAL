@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using StoneProtocol.NVVM.Model;
-using StoneProtocol.Theme;
 
 namespace StoneProtocol.NVVM.View
 {
@@ -24,17 +24,17 @@ namespace StoneProtocol.NVVM.View
             _usuarioRepository = new UsuarioRepository();
             _currentUser = _usuarioRepository.GetUsuarioById(AppState.UserId);
             _facturaRepository = new FacturaRepository();
-           
-            LoadFacturasAsync();
+
+            LoadFacturas();
         }
 
-        private async void LoadFacturasAsync()
+        private void LoadFacturas()
         {
             try
             {
-                var facturas = await Task.Run(() => _facturaRepository.GetAllFacturas());
-                var filteredFacturas = _currentUser.Admin ? 
-                    facturas.Where(f => f.Enviado).ToList() : 
+                var facturas = _facturaRepository.GetAllFacturas();
+                var filteredFacturas = _currentUser.Admin ?
+                    facturas.Where(f => f.Enviado).ToList() :
                     facturas.Where(f => f.Enviado && f.UsuarioId == _currentUser.Id).ToList();
                 FacturasDataGrid.ItemsSource = filteredFacturas;
             }
@@ -57,30 +57,7 @@ namespace StoneProtocol.NVVM.View
 
         private void PopulateLineasFacturaDisplays(IEnumerable<LineaFactura> lineasFactura)
         {
-            LineasFacturaWrapPanel.Children.Clear();
-
-            foreach (var lineaFactura in lineasFactura)
-            {
-                var viewModel = new ProductoDisplay
-                {
-                    NombreProducto = lineaFactura.Producto.NombreProducto,
-                    CategoriaNombre = lineaFactura.Producto.CategoriaNombre,
-                    BackgroundGradient = GetRandomGradient(),
-                    ImageSource = GetImageSourceByCategory(lineaFactura.Producto.CategoriaNombre),
-                    Precio = lineaFactura.Producto.Precio,
-                    Descripcion = lineaFactura.Producto.Descripcion,
-                };
-
-                var productDisplay = new ProductDisplay(false)
-                {
-                    DataContext = viewModel,
-                    Margin = new Thickness(20, 0, 40, 0),
-                    Width = 400,
-                    Height = 300
-                };
-
-                LineasFacturaWrapPanel.Children.Add(productDisplay);
-            }
+            LineasFacturaDataGrid.ItemsSource = lineasFactura;
         }
 
         private void CalculateTotal()
