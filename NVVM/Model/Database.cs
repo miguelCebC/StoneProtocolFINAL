@@ -10,7 +10,7 @@ namespace StoneProtocol.NVVM.Model
 
         public Database()
         {
-            // connectionString = "server=localhost;database=stoneprotocol;user=root;password=;port=3306;";
+           //  connectionString = "server=localhost;database=stoneprotocol;user=root;password=;port=3306;";
             connectionString = "server=108.181.197.184;database=stoneprotocol;user=admin;password=3nmNkxdK;port=10058;";
         }
 

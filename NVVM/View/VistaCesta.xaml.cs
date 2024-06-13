@@ -137,7 +137,7 @@ namespace StoneProtocol.NVVM.View
                     _selectedFactura.Confirmado = true;
 
                     await Task.Run(() => _facturaRepository.UpdateFactura(_selectedFactura));
-                    MessageBox.Show("Factura confirmada exitosamente.");
+                    MessageBox.Show("Pedido Realizado");
 
                     // Crear una nueva factura vacía para el mismo usuario
                     var nuevaFactura = new Factura
@@ -151,7 +151,7 @@ namespace StoneProtocol.NVVM.View
                     };
 
                     int nuevaFacturaId = await Task.Run(() => _facturaRepository.CreateFactura(nuevaFactura));
-                    MessageBox.Show("Nueva factura vacía creada exitosamente.");
+                  
 
                     // Actualizar AppState con el ID de la nueva factura
                     AppState.FacturaId = nuevaFacturaId;

@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Linq;
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+
 using StoneProtocol.NVVM.Model;
 
 namespace StoneProtocol.NVVM.View
@@ -14,8 +13,6 @@ namespace StoneProtocol.NVVM.View
         private Factura _selectedFactura;
         private Usuario _currentUser;
         private UsuarioRepository _usuarioRepository;
-        private static readonly Random Random = new Random();
-        private readonly Dictionary<string, ImageSource> _imageCache = new Dictionary<string, ImageSource>();
 
         public VistaFacturasEnviadas()
         {
@@ -76,31 +73,9 @@ namespace StoneProtocol.NVVM.View
             DireccionTextBlock.Text = $"Dirección: {direccion}";
         }
 
-        private LinearGradientBrush GetRandomGradient()
-        {
-            Color color1 = Color.FromRgb((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
-            Color color2 = Color.FromRgb((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
-            return new LinearGradientBrush(color1, color2, 45);
-        }
+      
 
-        private ImageSource GetImageSourceByCategory(string category)
-        {
-            if (!_imageCache.TryGetValue(category, out var imageSource))
-            {
-                string imagePath = category switch
-                {
-                    "Smartphones" => "pack://application:,,,/Imagenes/movil.png",
-                    "Laptops" => "pack://application:,,,/Imagenes/portatil.png",
-                    "Tablets" => "pack://application:,,,/Imagenes/tablet.png",
-                    "Accessories" => "pack://application:,,,/Imagenes/acc.png",
-                    _ => "pack://application:,,,/Imagenes/3.png",
-                };
-                imageSource = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                _imageCache[category] = imageSource;
-            }
-
-            return imageSource;
-        }
+     
 
         private void ImprimirFacturaButton_Click(object sender, RoutedEventArgs e)
         {

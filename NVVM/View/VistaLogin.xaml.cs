@@ -107,14 +107,7 @@ namespace StoneProtocol.NVVM.View
                 _facturaRepository.CreateFactura(nuevaFactura);
             }
 
-            // Leer los usuarios nuevamente para verificar el registro
-            usuarios = _usuarioRepository.ReadUsuarios();
-            string debugMessage = "Usuarios leídos de la base de datos después del registro:\n";
-            foreach (var user in usuarios)
-            {
-                debugMessage += $"ID: {user.Id}, Nombre: {user.Nombre}, Email: {user.Email}, Admin: {user.Admin}\n";
-            }
-            MessageBox.Show(debugMessage);
+          
         }
 
         private void ContrasenaBox_PasswordChanged(object sender, RoutedEventArgs e)
