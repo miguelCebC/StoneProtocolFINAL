@@ -23,7 +23,7 @@
                        FontSize="28"
                        Margin="0,0,0,20" FontWeight="Bold"/>
             <Image Source="/Imagenes/stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
-            <TabControl Width="300" Background="#272537">
+            <TabControl Width="300" Background="#272537" BorderBrush="#272537" TabStripPlacement="Bottom">
                 <TabItem Header="Iniciar Sesión">
                     <StackPanel Margin="20">
                         <TextBlock Text="Email o usuario"
@@ -54,6 +54,13 @@
                                    FontSize="18"
                                    Margin="0,0,0,0" />
                         <TextBox Name="RegistroNombreTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
+                        <TextBlock Text="Email"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   Margin="0,0,0,0"/>
+                        <TextBox Name="RegistroEmailTextBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
                         <TextBlock Text="Contraseña"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"

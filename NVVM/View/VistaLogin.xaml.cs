@@ -54,19 +54,20 @@ namespace StoneProtocol.NVVM.View
         private void BotonRegistrar_Click(object sender, RoutedEventArgs e)
         {
             string nombre = RegistroNombreTextBox.Text.Trim();
+            string email = RegistroEmailTextBox.Text.Trim();
             string contrasena = RegistroContrasenaBox.Password;
 
             // Verificar el valor del campo de texto
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(contrasena))
+            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(contrasena))
             {
-                MessageBox.Show("El nombre de usuario y la contraseña no pueden estar vacíos.");
+                MessageBox.Show("El nombre de usuario, el email y la contraseña no pueden estar vacíos.");
                 return;
             }
 
             var usuario = new Usuario
             {
                 Nombre = nombre,
-                Email = "", // Email vacío ya que no se utiliza
+                Email = email,
                 Contrasena = contrasena
             };
 

@@ -105,7 +105,9 @@ namespace StoneProtocol.NVVM.Model
                             {
                                 Id = reader.GetInt32("id"),
                                 Nombre = reader.GetString("nombre"),
-                                // Mapear otras propiedades según sea necesario
+                                Email = reader.GetString("email"),
+                                Admin = reader.GetBoolean("admin"),
+                                Contrasena = reader.GetString("contrasena")
                             };
                         }
                     }
