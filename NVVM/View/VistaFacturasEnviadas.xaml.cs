@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,6 +102,90 @@ namespace StoneProtocol.NVVM.View
             }
 
             return imageSource;
+        }
+
+        private void ImprimirFacturaButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedFactura == null)
+            {
+                MessageBox.Show("Seleccione una factura para imprimir.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                string html = GenerarFacturaHtml(_selectedFactura);
+                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Factura_{_selectedFactura.Id}.html");
+
+                File.WriteAllText(filePath, html);
+
+                MessageBox.Show($"Factura guardada en: {filePath}", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Abrir el archivo HTML en el navegador predeterminado
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(filePath) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al imprimir la factura: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GenerarFacturaHtml(Factura factura)
+        {
+            var usuarioRepository = new UsuarioRepository();
+            var usuario = usuarioRepository.GetUsuarioById(factura.UsuarioId);
+
+            var html = $@"
+                <html>
+                <head>
+                    <title>Factura #{factura.Id}</title>
+                    <style>
+                        body {{ font-family: Arial, sans-serif; }}
+                        table {{ width: 100%; border-collapse: collapse; }}
+                        th, td {{ padding: 8px; border: 1px solid #ddd; text-align: left; }}
+                        th {{ background-color: #f2f2f2; }}
+                        .total {{ font-weight: bold; }}
+                    </style>
+                </head>
+                <body>
+                    <h1>Factura #{factura.Id}</h1>
+                    <p><strong>Fecha:</strong> {factura.Fecha}</p>
+                    <p><strong>Usuario:</strong> {usuario.Nombre}</p>
+                    <p><strong>Dirección:</strong> {factura.Direccion}</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+
+            foreach (var linea in factura.LineasFactura)
+            {
+                html += $@"
+                            <tr>
+                                <td>{linea.Producto.NombreProducto}</td>
+                                <td>{linea.Producto.CategoriaNombre}</td>
+                                <td>{linea.Producto.Precio:F2}€</td>
+                                <td>{linea.Cantidad}</td>
+                                <td>{linea.Producto.Precio * linea.Cantidad:F2}€</td>
+                            </tr>";
+            }
+
+            decimal totalFactura = factura.LineasFactura.Sum(lf => (decimal)(lf.Producto.Precio * lf.Cantidad));
+
+            html += $@"
+                        </tbody>
+                    </table>
+                    <p class='total'><strong>Total:</strong> {totalFactura:F2}€</p>
+                </body>
+                </html>";
+
+            return html;
         }
     }
 }

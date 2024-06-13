@@ -43,6 +43,7 @@ namespace StoneProtocol.NVVM.View
         {
             var categories = _productoRepository.GetAllCategories();
             FilterCategoryComboBox.ItemsSource = categories;
+
         }
 
         private void PopulateProductDisplays(IEnumerable<Producto> productos)
