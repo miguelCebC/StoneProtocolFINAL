@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using StoneProtocol.NVVM.Model;
-using System.Linq;
 
 namespace StoneProtocol.NVVM.View
 {
