@@ -43,6 +43,8 @@
             <TextBlock x:Name="DireccionTextBlock" Text="Dirección: " FontSize="18" FontWeight="Bold"/>
 
             <Button Content="Imprimir Factura" Width="200" Click="ImprimirFacturaButton_Click" HorizontalAlignment="Center"/>
+            <Button x:Name="BorrarFacturaButton" Width="200" Content="Borrar Factura" Click="BorrarFacturaButton_Click" />
+
         </StackPanel>
     </Border>
 </UserControl>

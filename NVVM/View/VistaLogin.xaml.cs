@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using StoneProtocol.NVVM.Model;
 
@@ -66,6 +64,23 @@ namespace StoneProtocol.NVVM.View
                 return;
             }
 
+            var usuarios = _usuarioRepository.ReadUsuarios();
+            if (usuarios.Any(u => u.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show("El nombre de usuario ya está registrado. Por favor, elige otro nombre de usuario.");
+                RegistroNombreTextBox.Clear();
+                RegistroNombreTextBox.Focus();
+                return;
+            }
+
+            if (usuarios.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show("El email ya está registrado. Por favor, usa otro email.");
+                RegistroEmailTextBox.Clear();
+                RegistroEmailTextBox.Focus();
+                return;
+            }
+
             var usuario = new Usuario
             {
                 Nombre = nombre,
@@ -93,7 +108,7 @@ namespace StoneProtocol.NVVM.View
             }
 
             // Leer los usuarios nuevamente para verificar el registro
-            var usuarios = _usuarioRepository.ReadUsuarios();
+            usuarios = _usuarioRepository.ReadUsuarios();
             string debugMessage = "Usuarios leídos de la base de datos después del registro:\n";
             foreach (var user in usuarios)
             {

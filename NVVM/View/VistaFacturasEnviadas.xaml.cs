@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -186,6 +184,31 @@ namespace StoneProtocol.NVVM.View
                 </html>";
 
             return html;
+        }
+
+        private void BorrarFacturaButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedFactura == null)
+            {
+                MessageBox.Show("Seleccione una factura para borrar.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show("¿Está seguro de que desea borrar esta factura y todas sus líneas?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    _facturaRepository.DeleteFactura(_selectedFactura.Id);
+                    _selectedFactura = null;
+                    LoadFacturas();
+                    MessageBox.Show("Factura y sus líneas borradas exitosamente.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al borrar la factura: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

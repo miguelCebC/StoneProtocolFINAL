@@ -77,6 +77,7 @@ namespace StoneProtocol.NVVM.Model
             return factura;
         }
 
+
         public void AddLineaFactura(LineaFactura lineaFactura)
         {
             try
@@ -190,7 +191,40 @@ namespace StoneProtocol.NVVM.Model
 
             return facturas;
         }
+        public void DeleteFactura(int facturaId)
+        {
+            try
+            {
+                using (var connection = database.GetConnection())
+                {
+                    connection.Open();
 
+                    // Primero, eliminar las líneas de la factura
+                    string deleteLineasQuery = @"
+                        DELETE FROM lineas_factura
+                        WHERE factura_id = @FacturaId";
+                    using (var cmd = new MySqlCommand(deleteLineasQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FacturaId", facturaId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Después, eliminar la factura
+                    string deleteFacturaQuery = @"
+                        DELETE FROM facturas
+                        WHERE id = @Id";
+                    using (var cmd = new MySqlCommand(deleteFacturaQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", facturaId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting factura: {ex.Message}");
+            }
+        }
         public void UpdateFactura(Factura factura)
         {
             try

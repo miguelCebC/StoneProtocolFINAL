@@ -23,7 +23,7 @@
                        FontSize="28"
                        Margin="0,0,0,20" FontWeight="Bold"/>
             <Image Source="/Imagenes/stone.png" Width="250" Height="250" Margin="0,0,0,20"/>
-            <TabControl Width="300" Background="#272537" BorderBrush="#272537" TabStripPlacement="Bottom">
+            <TabControl Width="300" Background="#272537" BorderBrush="#272537" TabStripPlacement="Bottom" >
                 <TabItem Header="Iniciar Sesión">
                     <StackPanel Margin="20">
                         <TextBlock Text="Email o usuario"
@@ -45,7 +45,7 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Registrar">
+                <TabItem Header="Registro" >
                     <StackPanel Margin="20">
                         <TextBlock Text="Nombre de Usuario"
                                    VerticalAlignment="Center"
@@ -69,7 +69,7 @@
                                    Margin="0,0,0,0"/>
                         <PasswordBox Name="RegistroContrasenaBox" Width="250" Height="40" VerticalContentAlignment="Center" Margin="0,0,0,0" Background="#353340" BorderThickness="0" Foreground="White" Padding="5"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                            <Button Name="BotonRegistrar" Content="Registrar" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>
+                            <Button Name="BotonRegistrar" Content="Registrarse" Width="114" Height="40" Margin="5" Click="BotonRegistrar_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
