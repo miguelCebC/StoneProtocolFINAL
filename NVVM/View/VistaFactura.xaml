@@ -27,16 +27,19 @@
                     <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}" Width="*"/>
                     <DataGridTextColumn Header="Usuario ID" Binding="{Binding UsuarioId}" Width="*"/>
                     <DataGridTextColumn Header="Direccion" Binding="{Binding Direccion}" Width="*"/>
-                    <!-- Nueva columna para la dirección -->
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- ScrollViewer con las líneas del pedido -->
-            <ScrollViewer x:Name="ProductScrollViewer" Visibility="Hidden">
-                <WrapPanel x:Name="LineasFacturaWrapPanel" Margin="0,10,0,0">
-                    <!-- Aquí se agregarán dinámicamente los controles ProductDisplay -->
-                </WrapPanel>
-            </ScrollViewer>
+            <!-- DataGrid para mostrar las líneas de factura -->
+            <DataGrid x:Name="LineasFacturaDataGrid" AutoGenerateColumns="False" Margin="0,10,0,20">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Producto" Binding="{Binding Producto.NombreProducto}" Width="*"/>
+                    <DataGridTextColumn Header="Categoría" Binding="{Binding Producto.CategoriaNombre}" Width="*"/>
+                    <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="Auto"/>
+                    <DataGridTextColumn Header="Precio Unitario" Binding="{Binding Producto.Precio}" Width="Auto"/>
+                    <DataGridTextColumn Header="Descripción" Binding="{Binding Producto.Descripcion}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
             <!-- Total de las líneas del pedido -->
             <TextBlock x:Name="TotalTextBlock" Text="Total: $" FontSize="18" FontWeight="Bold"/>

@@ -24,25 +24,42 @@
             <ScrollViewer x:Name="ProductScrollViewer" 
                           PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown" 
                           PreviewMouseMove="ScrollViewer_PreviewMouseMove" 
-                          PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp">
+                          PreviewMouseLeftButtonUp="ScrollViewer_PreviewMouseLeftButtonUp"
+                          VerticalScrollBarVisibility="Hidden">
                 <WrapPanel x:Name="LineasFacturaWrapPanel" Margin="0,10,0,0">
                     <!-- Aquí se agregarán dinámicamente los controles ProductDisplay -->
                 </WrapPanel>
             </ScrollViewer>
 
             <!-- Total de las líneas del pedido -->
+           
             <TextBlock x:Name="TotalTextBlock" Text="Total: $" FontSize="18" FontWeight="Bold"/>
-
+      
+            <TextBlock Text="Dirección"
+ VerticalAlignment="Center"
+ HorizontalAlignment="Center"
+ Foreground="White"
+ FontSize="18"
+ Margin="0,10,0,0" />
             <!-- Campo para la dirección -->
-            <TextBox x:Name="DireccionTextBox" />
+            <TextBox x:Name="DireccionTextBox" Margin="0,10,0,0" Width="400" Height="24" />
 
+            <TextBlock Text="Método de Pago"
+VerticalAlignment="Center"
+HorizontalAlignment="Center"
+Foreground="White"
+FontSize="18"
+Margin="0,0,0,0" />
             <!-- ComboBox para el método de pago -->
-            <ComboBox x:Name="MetodoPagoComboBox" Margin="0,10,0,0">
+            <ComboBox x:Name="MetodoPagoComboBox" Margin="0,10,0,0" Width="400">
                 <ComboBoxItem Content="Contrareembolso"/>
             </ComboBox>
 
             <!-- Botón para confirmar la factura -->
             <Button Content="Confirmar Factura" Width="200" Click="ConfirmarFacturaButton_Click" HorizontalAlignment="Center"/>
+            <Button Content="Vaciar Cesta" Width="200" Click="VaciarCestaButton_Click"/>
+
+            <!-- Botón para vaciar la cesta -->
         </StackPanel>
     </Border>
 </UserControl>

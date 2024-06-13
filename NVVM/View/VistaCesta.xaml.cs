@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -165,6 +167,28 @@ namespace StoneProtocol.NVVM.View
             }
         }
 
+        private async void VaciarCestaButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedFactura != null)
+            {
+                try
+                {
+                    await Task.Run(() => _facturaRepository.DeleteLineasFacturaByFacturaId(_selectedFactura.Id));
+                    _selectedFactura.LineasFactura.Clear();
+                    PopulateLineasFacturaDisplays(_selectedFactura.LineasFactura);
+                    CalculateTotal();
+                    MessageBox.Show("Cesta vaciada exitosamente.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error vaciando la cesta: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay una factura seleccionada.");
+            }
+        }
 
         private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

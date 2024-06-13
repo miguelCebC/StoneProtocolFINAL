@@ -13,7 +13,6 @@ namespace StoneProtocol.NVVM.Model
             database = new Database();
         }
 
-
         public void CreateFactura(Factura factura)
         {
             try
@@ -23,7 +22,7 @@ namespace StoneProtocol.NVVM.Model
                     connection.Open();
                     string query = @"
                         INSERT INTO facturas (fecha, usuario_id, confirmado, enviado, direccion)
-                        VALUES (@Fecha, @UsuarioId, @Confirmado, @Enviado,'...')";
+                        VALUES (@Fecha, @UsuarioId, @Confirmado, @Enviado, @Direccion)";
                     using (var cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
@@ -37,10 +36,10 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error creating factura: {ex.Message}");
             }
         }
+
         public Factura GetFirstUnconfirmedFacturaByUserId(int userId)
         {
             Factura factura = null;
@@ -80,12 +79,12 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error retrieving first unconfirmed factura: {ex.Message}");
             }
 
             return factura;
         }
+
         public void AddLineaFactura(LineaFactura lineaFactura)
         {
             try
@@ -108,10 +107,10 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error adding linea factura: {ex.Message}");
             }
         }
+
         public List<Factura> GetAllFacturas()
         {
             var facturas = new List<Factura>();
@@ -122,8 +121,8 @@ namespace StoneProtocol.NVVM.Model
                 {
                     connection.Open();
                     string query = @"
-                SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado,f.direccion
-                FROM facturas f";
+                        SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado, f.direccion
+                        FROM facturas f";
                     using (var cmd = new MySqlCommand(query, connection))
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -134,11 +133,9 @@ namespace StoneProtocol.NVVM.Model
                                 Id = reader.GetInt32("id"),
                                 Fecha = reader.GetDateTime("fecha"),
                                 UsuarioId = reader.GetInt32("usuario_id"),
-                                Confirmado =   reader.GetBoolean("confirmado"),
-                                Direccion = reader.GetString("direccion"),
-
+                                Confirmado = reader.GetBoolean("confirmado"),
                                 Enviado = reader.GetBoolean("enviado"),
-
+                                Direccion = reader.GetString("direccion"),
                                 LineasFactura = new List<LineaFactura>()
                             });
                         }
@@ -152,12 +149,12 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error retrieving facturas: {ex.Message}");
             }
 
             return facturas;
         }
+
         public List<Factura> GetFacturasByUserId(int userId)
         {
             var facturas = new List<Factura>();
@@ -168,7 +165,7 @@ namespace StoneProtocol.NVVM.Model
                 {
                     connection.Open();
                     string query = @"
-                        SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado
+                        SELECT f.id, f.fecha, f.usuario_id, f.confirmado, f.enviado, f.direccion
                         FROM facturas f
                         WHERE f.usuario_id = @UsuarioId";
                     using (var cmd = new MySqlCommand(query, connection))
@@ -185,6 +182,7 @@ namespace StoneProtocol.NVVM.Model
                                     UsuarioId = reader.GetInt32("usuario_id"),
                                     Confirmado = reader.GetBoolean("confirmado"),
                                     Enviado = reader.GetBoolean("enviado"),
+                                    Direccion = reader.GetString("direccion"),
                                     LineasFactura = GetLineasFacturaByFacturaId(reader.GetInt32("id"))
                                 };
                                 facturas.Add(factura);
@@ -195,7 +193,6 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error retrieving facturas: {ex.Message}");
             }
 
@@ -210,14 +207,14 @@ namespace StoneProtocol.NVVM.Model
                 {
                     connection.Open();
                     string query = @"
-                UPDATE facturas 
-                SET confirmado = @Confirmado, enviado = @Enviado, direccion = @Direccion
-                WHERE id = @Id";
+                        UPDATE facturas 
+                        SET confirmado = @Confirmado, enviado = @Enviado, direccion = @Direccion
+                        WHERE id = @Id";
                     using (var cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@Confirmado", factura.Confirmado);
                         cmd.Parameters.AddWithValue("@Enviado", factura.Enviado);
-                        cmd.Parameters.AddWithValue("@Direccion", factura.Direccion); // Añadir dirección
+                        cmd.Parameters.AddWithValue("@Direccion", factura.Direccion);
                         cmd.Parameters.AddWithValue("@Id", factura.Id);
                         cmd.ExecuteNonQuery();
                     }
@@ -225,11 +222,32 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error updating factura: {ex.Message}");
             }
         }
 
+        public void DeleteLineasFacturaByFacturaId(int facturaId)
+        {
+            try
+            {
+                using (var connection = database.GetConnection())
+                {
+                    connection.Open();
+                    string query = @"
+                        DELETE FROM lineas_factura
+                        WHERE factura_id = @FacturaId";
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FacturaId", facturaId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting lineas factura: {ex.Message}");
+            }
+        }
 
         private List<LineaFactura> GetLineasFacturaByFacturaId(int facturaId)
         {
@@ -277,7 +295,6 @@ namespace StoneProtocol.NVVM.Model
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new Exception($"Error retrieving lineas factura: {ex.Message}");
             }
 

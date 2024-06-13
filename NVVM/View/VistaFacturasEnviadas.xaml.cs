@@ -24,11 +24,10 @@ namespace StoneProtocol.NVVM.View
             _usuarioRepository = new UsuarioRepository();
             _currentUser = _usuarioRepository.GetUsuarioById(AppState.UserId);
             _facturaRepository = new FacturaRepository();
-
             LoadFacturas();
         }
 
-        private void LoadFacturas()
+        private async void LoadFacturas()
         {
             try
             {
